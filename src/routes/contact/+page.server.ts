@@ -1,8 +1,8 @@
 import { fail } from '@sveltejs/kit';
-import { RESEND_API_KEY, CONTACT_EMAIL } from '$env/static/private';
+import { env } from '$env/dynamic/private';
 import { Resend } from 'resend';
 
-const resend = new Resend(RESEND_API_KEY);
+const resend = new Resend(env.RESEND_API_KEY);
 
 const MAX_MESSAGE_LENGTH = 3000;
 
@@ -21,6 +21,7 @@ function isValidEmail(email: string) {
 
 export const actions = {
     default: async ({ request }) => {
+        const resend = new Resend(env.RESEND_API_KEY);
         const formData = await request.formData();
 
         const name = formData.get('name')?.toString().trim() ?? '';
@@ -77,7 +78,7 @@ export const actions = {
         try {
             const result = await resend.emails.send({
                 from: 'Nanami Shiraki <onboarding@resend.dev>',
-                to: CONTACT_EMAIL,
+                to: env.CONTACT_EMAIL,
                 replyTo: email,
                 subject: `Neue Anfrage von ${name}`,
                 html: `
