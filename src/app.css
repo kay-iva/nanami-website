@@ -1,0 +1,205 @@
+:root {
+    /* Colours */
+    --color-cream: #f7f4ed;
+    --color-white: #ffffff;
+
+    --color-sage-100: #e0e6e2;
+    --color-sage-200: #cddbd4;
+    --color-sage-300: #a8c4b5;
+    --color-sage-700: #4a5a4f;
+
+    --color-peach: #e8c4b0;
+
+    --color-text: #3f4943;
+    --color-text-soft: #68736c;
+
+    /* Typography */
+    --font-serif: Georgia, 'Times New Roman', serif;
+    --font-sans: Arial, Helvetica, sans-serif;
+
+    /* Layout */
+    --page-padding: clamp(1.25rem, 4vw, 5rem);
+    --content-width: 1400px;
+
+    /* Navbar */
+    --navbar-height: 88px;
+
+    /* Borders */
+    --border-soft: rgba(74, 90, 79, 0.15);
+
+    /* Shadows */
+    --shadow-soft: 0 10px 40px rgba(53, 65, 58, 0.08);
+
+    /* Transitions */
+    --transition-fast: 180ms ease;
+    --transition-normal: 280ms ease;
+}
+
+/* -------------------------
+   Reset
+------------------------- */
+
+html {
+    scroll-behavior: smooth;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    min-height: 100%;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    padding-top: var(--navbar-height);
+
+    background: var(--color-cream);
+    color: var(--color-text);
+
+    font-family: var(--font-sans);
+    font-size: 16px;
+    line-height: 1.6;
+
+    -webkit-font-smoothing: antialiased;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+img,
+picture,
+video,
+canvas,
+svg {
+    display: block;
+    max-width: 100%;
+}
+
+button,
+input,
+textarea,
+select {
+    font: inherit;
+}
+
+button,
+a {
+    -webkit-tap-highlight-color: transparent;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+button {
+    border: 0;
+    padding: 0;
+    background: none;
+    color: inherit;
+    cursor: pointer;
+}
+
+/* -------------------------
+   Typography
+------------------------- */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+    margin-top: 0;
+}
+
+h1,
+h2,
+h3 {
+    font-family: var(--font-serif);
+    font-weight: 400;
+}
+
+h1 {
+    font-size: clamp(3.5rem, 8vw, 8rem);
+    line-height: 0.95;
+    letter-spacing: -0.04em;
+}
+
+h2 {
+    font-size: clamp(2.5rem, 5vw, 5rem);
+    line-height: 1;
+    letter-spacing: -0.03em;
+}
+
+h3 {
+    font-size: clamp(1.7rem, 3vw, 2.6rem);
+    line-height: 1.1;
+}
+
+/* -------------------------
+   Reusable layout
+------------------------- */
+
+.page-container {
+    width: min(
+            calc(100% - (var(--page-padding) * 2)),
+            var(--content-width)
+    );
+
+    margin-inline: auto;
+}
+
+.section {
+    padding-block: clamp(5rem, 10vw, 10rem);
+}
+
+.section-soft {
+    background: var(--color-sage-100);
+}
+
+.section-peach {
+    background: var(--color-peach);
+}
+
+/* -------------------------
+   Utility
+------------------------- */
+
+.visually-hidden {
+    position: absolute;
+
+    width: 1px;
+    height: 1px;
+
+    padding: 0;
+    margin: -1px;
+
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+
+    border: 0;
+}
+
+::selection {
+    background: var(--color-sage-300);
+    color: var(--color-white);
+}
+
+@media (max-width: 800px) {
+    :root {
+        --navbar-height: 72px;
+        --page-padding: 1.25rem;
+    }
+
+    body {
+        padding-top: 0;
+    }
+}
