@@ -357,6 +357,11 @@
                             </div>
                         {/each}
                     </div>
+
+                    <a href="/booking" class="booking-link">
+                        <span>Einzelstunde buchen</span>
+                        <span>↗</span>
+                    </a>
                 </article>
 
             </div>
