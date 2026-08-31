@@ -78,7 +78,8 @@
                 }
             },
             hideEventTypeDetails: false,
-            layout: 'month_view'
+            layout: 'month_view',
+            theme: 'light'
         });
     });
 </script>
@@ -90,11 +91,12 @@
 <style>
     .booking-calendar {
         width: 100%;
-        min-height: 700px;
+        max-width: 1100px;
+        margin: 0 auto;
     }
 
     #cal-booking {
         width: 100%;
-        min-height: 700px;
+        min-height: 620px;
     }
 </style>

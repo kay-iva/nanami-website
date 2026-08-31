@@ -8,10 +8,9 @@
 
 <script lang="ts">
     /*
-     * Preise aus der Preisliste 2018/19.
-     * Vor Veröffentlichung unbedingt mit Nanami abklären,
-     * ob diese noch aktuell sind.
+     * Preise vor Veröffentlichung unbedingt mit Nanami abklären.
      */
+
     const yearlyPlans = [
         {
             duration: '30 min',
@@ -75,10 +74,17 @@
                     persönliche Ziele, Interessen und Erfahrungen.
                 </p>
 
-                <a href="#kennenlernen" class="text-link">
-                    <span>Kostenlose Probestunde</span>
-                    <span>↘</span>
-                </a>
+                <div class="intro-actions">
+                    <a href="#kennenlernen" class="text-link">
+                        <span>Kostenlose Probestunde</span>
+                        <span>↘</span>
+                    </a>
+
+                    <a href="/booking" class="text-link secondary-link">
+                        <span>Einzelstunde buchen</span>
+                        <span>↗</span>
+                    </a>
+                </div>
             </div>
 
             <div class="intro-image">
@@ -297,6 +303,11 @@
                             </div>
                         {/each}
                     </div>
+
+                    <a href="/contact" class="card-action subtle">
+                        <span>Jahresvertrag anfragen</span>
+                        <span>↗</span>
+                    </a>
                 </article>
 
 
@@ -329,12 +340,22 @@
                             {/each}
                         </div>
                     {/each}
+
+                    <a href="/contact" class="card-action subtle">
+                        <span>Stundenblock anfragen</span>
+                        <span>↗</span>
+                    </a>
                 </article>
 
 
                 <!-- SINGLE -->
 
-                <article class="price-card">
+                <article class="price-card single-card">
+
+                    <div class="booking-badge">
+                        Direkt buchbar
+                    </div>
+
                     <div class="card-heading">
                         <p class="card-number">03</p>
 
@@ -346,7 +367,8 @@
 
                     <p class="card-description">
                         Einzelne Unterrichtseinheiten ohne
-                        längerfristige Bindung.
+                        längerfristige Bindung. Termin einfach
+                        online auswählen und direkt buchen.
                     </p>
 
                     <div class="price-list">
@@ -358,10 +380,15 @@
                         {/each}
                     </div>
 
-                    <a href="/booking" class="booking-link">
-                        <span>Einzelstunde buchen</span>
-                        <span>↗</span>
+                    <a href="/booking" class="booking-button">
+                        <div>
+                            <small>Online-Terminbuchung</small>
+                            <span>Einzelstunde buchen</span>
+                        </div>
+
+                        <span class="booking-arrow">↗</span>
                     </a>
+
                 </article>
 
             </div>
@@ -428,6 +455,7 @@
 
     <section class="contact-cta">
         <div class="page-container contact-inner">
+
             <p>Bereit für die erste Stunde?</p>
 
             <h2>
@@ -436,14 +464,22 @@
             </h2>
 
             <p class="cta-description">
-                Lerne mich und meinen Unterricht bei einer
-                kostenlosen 30-minütigen Probestunde kennen.
+                Lerne meinen Unterricht zuerst unverbindlich kennen
+                oder buche direkt eine einzelne Unterrichtseinheit.
             </p>
 
-            <a href="/contact" class="cta-link">
-                <span>Probestunde anfragen</span>
-                <span>↗</span>
-            </a>
+            <div class="cta-actions">
+                <a href="/contact" class="cta-link">
+                    <span>Probestunde anfragen</span>
+                    <span>↗</span>
+                </a>
+
+                <a href="/booking" class="cta-booking">
+                    <span>Einzelstunde buchen</span>
+                    <span>↗</span>
+                </a>
+            </div>
+
         </div>
     </section>
 
@@ -454,6 +490,7 @@
     .teaching-page {
         overflow: hidden;
     }
+
 
     /* --------------------------------
        Shared
@@ -521,6 +558,14 @@
         line-height: 1.8;
     }
 
+    .intro-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1.5rem 2.5rem;
+
+        margin-top: 2rem;
+    }
+
     .intro-image {
         position: relative;
     }
@@ -552,7 +597,6 @@
         align-items: center;
         gap: 2rem;
 
-        margin-top: 2rem;
         padding-bottom: 0.5rem;
 
         border-bottom: 1px solid var(--color-sage-700);
@@ -563,11 +607,23 @@
         font-weight: 500;
         letter-spacing: 0.07em;
 
-        transition: gap var(--transition-fast);
+        transition:
+                gap var(--transition-fast),
+                opacity var(--transition-fast);
     }
 
     .text-link:hover {
         gap: 2.5rem;
+    }
+
+    .secondary-link {
+        color: var(--color-text-soft);
+        border-color: var(--border-soft);
+    }
+
+    .secondary-link:hover {
+        color: var(--color-sage-700);
+        border-color: var(--color-sage-700);
     }
 
 
@@ -710,7 +766,6 @@
         grid-template-columns: 100px 1fr;
 
         gap: 1.5rem;
-
         padding: 1.5rem 0;
 
         border-top: 1px solid var(--border-soft);
@@ -853,6 +908,11 @@
     }
 
     .price-card {
+        position: relative;
+
+        display: flex;
+        flex-direction: column;
+
         padding: clamp(2rem, 4vw, 3.5rem);
 
         border-right: 1px solid var(--border-soft);
@@ -938,13 +998,94 @@
         font-size: 0.65rem;
     }
 
-    .price-note {
-        margin: 2rem 0 0;
+    .booking-badge {
+        align-self: flex-start;
 
-        color: var(--color-text-soft);
+        margin-bottom: 1.5rem;
+        padding: 0.45rem 0.7rem;
 
-        font-size: 0.75rem;
-        font-style: italic;
+        border: 1px solid var(--color-sage-300);
+        border-radius: 999px;
+
+        color: var(--color-sage-700);
+
+        font-size: 0.63rem;
+        font-weight: 600;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+    }
+
+    .card-action {
+        display: inline-flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+
+        margin-top: auto;
+        padding-top: 2.5rem;
+
+        color: var(--color-sage-700);
+
+        font-size: 0.72rem;
+        letter-spacing: 0.06em;
+    }
+
+    .card-action.subtle {
+        opacity: 0.72;
+    }
+
+    .card-action:hover {
+        opacity: 1;
+    }
+
+    .booking-button {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 2rem;
+
+        margin-top: 3rem;
+        padding: 1.25rem 1.35rem;
+
+        background: var(--color-sage-700);
+        color: var(--color-cream);
+
+        transition:
+                transform var(--transition-fast),
+                background var(--transition-fast);
+    }
+
+    .booking-button div {
+        display: flex;
+        flex-direction: column;
+        gap: 0.3rem;
+    }
+
+    .booking-button small {
+        color: var(--color-sage-100);
+
+        font-size: 0.62rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+    }
+
+    .booking-button > div > span {
+        font-family: var(--font-serif);
+        font-size: 1.15rem;
+    }
+
+    .booking-arrow {
+        font-size: 1.2rem;
+
+        transition: transform var(--transition-fast);
+    }
+
+    .booking-button:hover {
+        transform: translateY(-2px);
+    }
+
+    .booking-button:hover .booking-arrow {
+        transform: translate(3px, -3px);
     }
 
 
@@ -972,7 +1113,6 @@
         grid-template-columns: 50px 1fr;
 
         gap: 1rem;
-
         padding: 2.5rem 0;
 
         border-top: 1px solid rgba(74, 90, 79, 0.2);
@@ -1040,7 +1180,7 @@
     }
 
     .cta-description {
-        max-width: 520px;
+        max-width: 540px;
 
         margin: 2.5rem auto 0;
 
@@ -1050,12 +1190,22 @@
         line-height: 1.8;
     }
 
+    .cta-actions {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+
+        gap: 1.5rem 2.5rem;
+
+        margin-top: 2.5rem;
+    }
+
     .cta-link {
         display: inline-flex;
         align-items: center;
         gap: 2.5rem;
 
-        margin-top: 2.5rem;
         padding-bottom: 0.6rem;
 
         border-bottom: 1px solid var(--color-sage-700);
@@ -1070,6 +1220,29 @@
 
     .cta-link:hover {
         gap: 3rem;
+    }
+
+    .cta-booking {
+        display: inline-flex;
+        align-items: center;
+        gap: 2.5rem;
+
+        padding: 0.95rem 1.25rem;
+
+        background: var(--color-sage-700);
+        color: var(--color-cream);
+
+        font-size: 0.8rem;
+        letter-spacing: 0.08em;
+
+        transition:
+                gap var(--transition-fast),
+                transform var(--transition-fast);
+    }
+
+    .cta-booking:hover {
+        gap: 3rem;
+        transform: translateY(-2px);
     }
 
 
@@ -1087,6 +1260,13 @@
         .prices-heading,
         .more-grid {
             grid-template-columns: 1fr;
+        }
+
+        .intro-actions {
+            flex-direction: column;
+            align-items: flex-start;
+
+            gap: 1.5rem;
         }
 
         .intro-image {
@@ -1151,8 +1331,22 @@
             min-height: auto;
         }
 
+        .booking-button {
+            margin-top: 2.5rem;
+        }
+
         .more-items {
             margin-top: 1rem;
+        }
+
+        .cta-actions {
+            flex-direction: column;
+        }
+
+        .cta-link,
+        .cta-booking {
+            width: min(100%, 320px);
+            justify-content: space-between;
         }
     }
 </style>
