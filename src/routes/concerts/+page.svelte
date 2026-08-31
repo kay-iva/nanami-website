@@ -163,8 +163,6 @@
                 </p>
             </div>
 
-            <pre>{JSON.stringify(data.galleryImages, null, 2)}</pre>
-
             {#if data.galleryImages.length > 0}
                 <PhotoGallery images={data.galleryImages} />
             {:else}
