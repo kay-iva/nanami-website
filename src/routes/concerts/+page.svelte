@@ -3,12 +3,6 @@
     import PhotoGallery from '$lib/components/PhotoGallery.svelte';
     import type { Concert, GalleryImage } from '$lib/types';
 
-    /*
-     * Add upcoming concerts here.
-     *
-     * ticketUrl is optional — if there is an Öticket page,
-     * simply paste the URL there.
-     */
     const upcomingConcerts: Concert[] = [
         /*
         {
@@ -61,29 +55,30 @@
 </svelte:head>
 
 <main>
-    <!-- INTRO -->
-    <section class="concert-header">
-        <div class="page-container header-inner">
-            <p class="eyebrow">Konzerte</p>
+    <!-- HERO -->
+    <section class="concert-hero">
+        <div class="page-container hero-grid">
+            <div class="hero-content">
+                <p class="eyebrow">Konzerte</p>
 
-            <h1>
-                Musik gemeinsam
-                <span>auf die Bühne bringen.</span>
-            </h1>
+                <h1>
+                    Musik gemeinsam
+                    <span>auf die Bühne bringen.</span>
+                </h1>
 
-            <p class="intro">
-                Regelmäßig entstehen besondere Konzertmomente –
-                von Schülerkonzerten bis zu weiteren musikalischen Projekten.
-            </p>
+                <p class="intro">
+                    Regelmäßig entstehen besondere Konzertmomente –
+                    von Schülerkonzerten bis zu weiteren musikalischen Projekten.
+                </p>
+            </div>
+
+            <div class="hero-image">
+                <img
+                        src="/images/concerts.jpg"
+                        alt="Konzert von Nanami Shiraki"
+                />
+            </div>
         </div>
-    </section>
-
-    <!-- LARGE CONCERT IMAGE -->
-    <section class="concert-hero-image">
-        <img
-                src="/images/concerts.jpg"
-                alt="Konzert von Nanami Shiraki"
-        />
     </section>
 
     <!-- UPCOMING CONCERTS -->
@@ -92,6 +87,7 @@
             <div class="section-heading">
                 <div>
                     <p class="eyebrow">Termine</p>
+
                     <h2>
                         Kommende
                         <span>Konzerte</span>
@@ -112,11 +108,15 @@
                 </div>
             {:else}
                 <div class="empty-state">
-                    <div class="empty-symbol">♪</div>
+                    <div class="empty-symbol" aria-hidden="true">♪</div>
 
-                    <div>
+                    <div class="empty-content">
                         <p class="empty-label">Momentan keine Termine</p>
-                        <h3>Neue Konzerte sind bereits in Planung.</h3>
+
+                        <h3>
+                            Neue Konzerte sind bereits in Planung.
+                        </h3>
+
                         <p>
                             Sobald ein neuer Termin feststeht, findest du
                             hier alle Informationen dazu.
@@ -161,7 +161,7 @@
                     zu sammeln.
                 </p>
 
-                <a href="/contact" class="text-link">
+                <a href="/teaching" class="text-link">
                     <span>Mehr über den Unterricht erfahren</span>
                     <span aria-hidden="true">↗</span>
                 </a>
@@ -180,7 +180,7 @@
                     <span>in Erinnerung bleiben.</span>
                 </h2>
 
-                <p>
+                <p class="gallery-description">
                     Einblicke in vergangene Konzerte,
                     Auftritte und gemeinsame musikalische Momente.
                 </p>
@@ -193,20 +193,11 @@
 
 <style>
     /* ================================
-       HEADER
+       SHARED
     ================================ */
 
-    .concert-header {
-        padding: calc(var(--navbar-height) + 7rem) 0 6rem;
-        background: var(--color-cream);
-    }
-
-    .header-inner {
-        max-width: 1050px;
-    }
-
     .eyebrow {
-        margin: 0 0 1.25rem;
+        margin: 0 0 1.4rem;
         font-family: var(--font-sans);
         font-size: 0.72rem;
         font-weight: 600;
@@ -224,11 +215,6 @@
         color: var(--color-text);
     }
 
-    h1 {
-        max-width: 850px;
-        font-size: clamp(3.4rem, 7vw, 7rem);
-    }
-
     h1 span,
     h2 span {
         display: block;
@@ -236,41 +222,55 @@
         color: var(--color-sage-700);
     }
 
+
+    /* ================================
+       HERO
+    ================================ */
+
+    .concert-hero {
+        padding:
+                calc(var(--navbar-height) + 5rem)
+                0
+                7rem;
+        background: var(--color-cream);
+    }
+
+    .hero-grid {
+        display: grid;
+        grid-template-columns:
+			minmax(0, 0.9fr)
+			minmax(380px, 1.1fr);
+        gap: clamp(3rem, 7vw, 7rem);
+        align-items: center;
+    }
+
+    .hero-content {
+        padding: 3rem 0;
+    }
+
+    h1 {
+        max-width: 680px;
+        font-size: clamp(3.5rem, 5.8vw, 6.4rem);
+    }
+
     .intro {
-        max-width: 610px;
+        max-width: 510px;
         margin: 2.5rem 0 0;
         font-family: var(--font-sans);
-        font-size: 1.08rem;
+        font-size: 1.05rem;
         line-height: 1.8;
         color: var(--color-text-soft);
     }
 
-
-    /* ================================
-       HERO IMAGE
-    ================================ */
-
-    .concert-hero-image {
+    .hero-image {
         position: relative;
-        width: 100%;
-        height: clamp(360px, 52vw, 720px);
+        height: min(68vh, 700px);
+        min-height: 520px;
         overflow: hidden;
         background: var(--color-sage-100);
     }
 
-    .concert-hero-image::after {
-        content: '';
-        position: absolute;
-        inset: 0;
-        background: linear-gradient(
-                to bottom,
-                transparent 65%,
-                rgba(0, 0, 0, 0.12)
-        );
-        pointer-events: none;
-    }
-
-    .concert-hero-image img {
+    .hero-image img {
         width: 100%;
         height: 100%;
         display: block;
@@ -279,8 +279,8 @@
         transition: transform 1.4s ease;
     }
 
-    .concert-hero-image:hover img {
-        transform: scale(1.015);
+    .hero-image:hover img {
+        transform: scale(1.02);
     }
 
 
@@ -290,7 +290,7 @@
 
     .upcoming-section {
         padding: 8rem 0;
-        background: var(--color-cream);
+        background: var(--color-sage-100);
     }
 
     .section-heading {
@@ -329,7 +329,7 @@
         align-items: center;
         padding: 3rem;
         border: 1px solid var(--border-soft);
-        background: var(--color-sage-100);
+        background: var(--color-cream);
     }
 
     .empty-symbol {
@@ -337,6 +337,7 @@
         place-items: center;
         width: 76px;
         height: 76px;
+        flex-shrink: 0;
         border: 1px solid var(--color-sage-300);
         border-radius: 50%;
         font-family: var(--font-serif);
@@ -362,7 +363,7 @@
         color: var(--color-text);
     }
 
-    .empty-state p:last-child {
+    .empty-content > p:last-child {
         max-width: 520px;
         margin: 0;
         font-family: var(--font-sans);
@@ -377,7 +378,7 @@
 
     .student-section {
         padding: 9rem 0;
-        background: var(--color-sage-100);
+        background: var(--color-cream);
     }
 
     .student-grid {
@@ -441,15 +442,15 @@
 
     .gallery-section {
         padding: 9rem 0;
-        background: var(--color-cream);
+        background: var(--color-sage-100);
     }
 
     .gallery-heading {
-        max-width: 720px;
+        max-width: 760px;
         margin-bottom: 4.5rem;
     }
 
-    .gallery-heading p:last-child {
+    .gallery-description {
         max-width: 520px;
         margin: 2rem 0 0;
         font-family: var(--font-sans);
@@ -463,7 +464,20 @@
        TABLET
     ================================ */
 
-    @media (max-width: 900px) {
+    @media (max-width: 950px) {
+        .hero-grid {
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+        }
+
+        h1 {
+            font-size: clamp(3rem, 7vw, 5rem);
+        }
+
+        .hero-image {
+            min-height: 480px;
+        }
+
         .section-heading {
             grid-template-columns: 1fr;
             gap: 2rem;
@@ -485,8 +499,17 @@
     ================================ */
 
     @media (max-width: 768px) {
-        .concert-header {
+        .concert-hero {
             padding: 6.5rem 0 4rem;
+        }
+
+        .hero-grid {
+            grid-template-columns: 1fr;
+            gap: 3rem;
+        }
+
+        .hero-content {
+            padding: 0;
         }
 
         h1 {
@@ -498,10 +521,11 @@
             font-size: 1rem;
         }
 
-        .concert-hero-image {
-            height: 52vh;
-            min-height: 320px;
-            max-height: 500px;
+        .hero-image {
+            width: 100%;
+            height: 62vh;
+            min-height: 400px;
+            max-height: 560px;
         }
 
         .upcoming-section,
