@@ -1,44 +1,53 @@
 <script lang="ts">
     import ConcertCard from '$lib/components/ConcertCard.svelte';
     import PhotoGallery from '$lib/components/PhotoGallery.svelte';
-    import type { Concert } from '$lib/types';
+    import type { Concert, GalleryImage } from '$lib/types';
 
+    /*
+     * Add upcoming concerts here.
+     *
+     * ticketUrl is optional — if there is an Öticket page,
+     * simply paste the URL there.
+     */
     const upcomingConcerts: Concert[] = [
         /*
         {
-            title: 'Schülerkonzert 2026',
-            date: '15. November 2026',
+            title: 'Klavierabend',
+            date: '14. Dezember 2026',
             time: '18:00 Uhr',
             location: 'Wien',
             description:
-                'Ein gemeinsamer Konzertabend mit Schülerinnen und Schülern verschiedener Altersgruppen.',
-            image: '/images/concerts/concert-2026.jpg',
-            ticketUrl: 'https://www.oeticket.com/...'
+                'Ein gemeinsamer Konzertabend mit Schülerinnen und Schülern.',
+            image: '/images/concerts/concert-example.jpg',
+            ticketUrl: 'https://...'
         }
         */
     ];
 
-
-    const galleryImages = [
+    const galleryImages: GalleryImage[] = [
         {
             src: '/images/concerts/gallery-01.jpg',
-            alt: 'Schülerkonzert von Nanami Shiraki'
+            alt: 'Impression eines Klavierkonzerts'
         },
         {
             src: '/images/concerts/gallery-02.jpg',
-            alt: 'Klavierschülerinnen und Klavierschüler bei einem Konzert'
-        },
-        {
-            src: '/images/concerts/gallery-03.jpg',
-            alt: 'Konzertabend in Wien'
-        },
-        {
-            src: '/images/concerts/gallery-04.jpg',
             alt: 'Klavier auf der Konzertbühne'
         },
         {
-            src: '/images/concerts/gallery-05.jpg',
+            src: '/images/concerts/gallery-03.jpg',
             alt: 'Impression eines Schülerkonzerts'
+        },
+        {
+            src: '/images/concerts/gallery-04.jpg',
+            alt: 'Konzertmoment am Klavier'
+        },
+        {
+            src: '/images/concerts/gallery-05.jpg',
+            alt: 'Auftritt bei einem Klavierkonzert'
+        },
+        {
+            src: '/images/concerts/gallery-06.jpg',
+            alt: 'Impression aus einem Konzertsaal'
         }
     ];
 </script>
@@ -47,13 +56,14 @@
     <title>Konzerte | Nanami Shiraki</title>
     <meta
             name="description"
-            content="Konzerte und Schülerkonzerte von Nanami Shiraki in Wien."
+            content="Konzerte, Schülerkonzerte und musikalische Impressionen von Nanami Shiraki in Wien."
     />
 </svelte:head>
 
-<main class="concert-page">
-    <section class="intro">
-        <div class="page-container intro-inner">
+<main>
+    <!-- INTRO -->
+    <section class="concert-header">
+        <div class="page-container header-inner">
             <p class="eyebrow">Konzerte</p>
 
             <h1>
@@ -61,24 +71,37 @@
                 <span>auf die Bühne bringen.</span>
             </h1>
 
-            <p class="lead">
-                Regelmäßig organisiere ich Konzerte, bei denen meine
-                Schülerinnen und Schüler die Möglichkeit bekommen,
-                ihre Musik vor Publikum zu präsentieren und wertvolle
-                Bühnenerfahrung zu sammeln.
+            <p class="intro">
+                Regelmäßig entstehen besondere Konzertmomente –
+                von Schülerkonzerten bis zu weiteren musikalischen Projekten.
             </p>
         </div>
     </section>
 
-    <section class="upcoming">
+    <!-- LARGE CONCERT IMAGE -->
+    <section class="concert-hero-image">
+        <img
+                src="/images/concerts.jpg"
+                alt="Konzert von Nanami Shiraki"
+        />
+    </section>
+
+    <!-- UPCOMING CONCERTS -->
+    <section class="upcoming-section">
         <div class="page-container">
             <div class="section-heading">
-                <p class="eyebrow">Aktuelle Termine</p>
+                <div>
+                    <p class="eyebrow">Termine</p>
+                    <h2>
+                        Kommende
+                        <span>Konzerte</span>
+                    </h2>
+                </div>
 
-                <h2>
-                    Als Nächstes
-                    <span>auf der Bühne.</span>
-                </h2>
+                <p class="section-description">
+                    Hier findest du aktuelle Konzerttermine und
+                    Informationen zu kommenden Veranstaltungen.
+                </p>
             </div>
 
             {#if upcomingConcerts.length > 0}
@@ -89,64 +112,77 @@
                 </div>
             {:else}
                 <div class="empty-state">
-                    <p class="empty-number">♪</p>
+                    <div class="empty-symbol">♪</div>
 
-                    <h3>Derzeit keine Termine angekündigt</h3>
-
-                    <p>
-                        Neue Konzerttermine findest du hier,
-                        sobald sie feststehen.
-                    </p>
+                    <div>
+                        <p class="empty-label">Momentan keine Termine</p>
+                        <h3>Neue Konzerte sind bereits in Planung.</h3>
+                        <p>
+                            Sobald ein neuer Termin feststeht, findest du
+                            hier alle Informationen dazu.
+                        </p>
+                    </div>
                 </div>
             {/if}
         </div>
     </section>
 
-    <section class="student-concerts section-soft">
+    <!-- STUDENT CONCERTS -->
+    <section class="student-section">
         <div class="page-container student-grid">
-            <div class="section-number">
-                <p>01</p>
-                <span>Schülerkonzerte</span>
+            <div class="student-title">
+                <p class="eyebrow">Schülerkonzerte</p>
+
+                <h2>
+                    Gemeinsam
+                    <span>Musik erleben.</span>
+                </h2>
             </div>
 
-            <div class="student-copy">
-                <h2>
-                    Mehr als nur
-                    <span>Unterricht.</span>
-                </h2>
-
-                <p>
-                    Ein Konzert ist für Schülerinnen und Schüler eine
-                    ganz besondere Erfahrung. Es bietet die Möglichkeit,
-                    das Gelernte zu teilen, neue Sicherheit zu gewinnen
-                    und Musik gemeinsam zu erleben.
+            <div class="student-content">
+                <p class="lead">
+                    Ein wichtiger Teil meines Unterrichts ist es,
+                    Musik nicht nur im Unterrichtsraum, sondern auch
+                    auf der Bühne erleben zu können.
                 </p>
 
                 <p>
-                    Bei ausreichender Teilnehmerzahl organisiere ich
-                    Schülerkonzerte in einem Konzertsaal, sodass jede und
-                    jeder die Gelegenheit bekommt, auf einer echten Bühne
-                    zu spielen.
+                    Deshalb organisiere ich regelmäßig Schülerkonzerte,
+                    bei denen meine Schülerinnen und Schüler die Möglichkeit
+                    haben, ihre Musik mit Familie, Freunden und anderen
+                    Musikbegeisterten zu teilen.
                 </p>
+
+                <p>
+                    Wenn genügend Teilnehmerinnen und Teilnehmer zusammenkommen,
+                    findet das Konzert in einem angemieteten Konzertsaal statt.
+                    Dabei steht nicht Perfektion im Vordergrund, sondern die
+                    Freude daran, gemeinsam Musik zu machen und Bühnenerfahrung
+                    zu sammeln.
+                </p>
+
+                <a href="/contact" class="text-link">
+                    <span>Mehr über den Unterricht erfahren</span>
+                    <span aria-hidden="true">↗</span>
+                </a>
             </div>
         </div>
     </section>
 
+    <!-- GALLERY -->
     <section class="gallery-section">
         <div class="page-container">
             <div class="gallery-heading">
-                <div>
-                    <p class="eyebrow">Impressionen</p>
+                <p class="eyebrow">Impressionen</p>
 
-                    <h2>
-                        Momente,
-                        <span>die bleiben.</span>
-                    </h2>
-                </div>
+                <h2>
+                    Momente, die
+                    <span>in Erinnerung bleiben.</span>
+                </h2>
 
                 <p>
-                    Einblicke in vergangene Schülerkonzerte,
-                    gemeinsame musikalische Momente und Auftritte.
+                    Einblicke in vergangene Konzerte,
+                    Auftritte und gemeinsame musikalische Momente.
                 </p>
             </div>
 
@@ -156,207 +192,347 @@
 </main>
 
 <style>
-    .concert-page {
-        overflow: hidden;
+    /* ================================
+       HEADER
+    ================================ */
+
+    .concert-header {
+        padding: calc(var(--navbar-height) + 7rem) 0 6rem;
+        background: var(--color-cream);
+    }
+
+    .header-inner {
+        max-width: 1050px;
     }
 
     .eyebrow {
-        margin-bottom: 1.5rem;
-
-        color: var(--color-sage-300);
-
+        margin: 0 0 1.25rem;
+        font-family: var(--font-sans);
         font-size: 0.72rem;
-        font-weight: 500;
-        letter-spacing: 0.2em;
+        font-weight: 600;
+        letter-spacing: 0.18em;
         text-transform: uppercase;
+        color: var(--color-sage-700);
+    }
+
+    h1,
+    h2 {
+        margin: 0;
+        font-family: var(--font-serif);
+        font-weight: 400;
+        line-height: 0.98;
+        color: var(--color-text);
+    }
+
+    h1 {
+        max-width: 850px;
+        font-size: clamp(3.4rem, 7vw, 7rem);
     }
 
     h1 span,
     h2 span {
         display: block;
-
-        color: var(--color-text);
-
         font-style: italic;
-    }
-
-    .intro {
-        padding:
-                clamp(5rem, 8vw, 8rem)
-                0
-                clamp(6rem, 10vw, 10rem);
-
-        background: var(--color-cream);
-    }
-
-    .intro-inner {
-        max-width: 950px;
-    }
-
-    h1 {
-        margin-bottom: 2.5rem;
-
         color: var(--color-sage-700);
     }
 
-    .lead {
-        max-width: 680px;
-
-        color: var(--color-text-soft);
-
-        font-size: clamp(1.1rem, 1.5vw, 1.3rem);
+    .intro {
+        max-width: 610px;
+        margin: 2.5rem 0 0;
+        font-family: var(--font-sans);
+        font-size: 1.08rem;
         line-height: 1.8;
+        color: var(--color-text-soft);
     }
 
-    .upcoming {
-        padding-bottom: clamp(7rem, 11vw, 11rem);
+
+    /* ================================
+       HERO IMAGE
+    ================================ */
+
+    .concert-hero-image {
+        position: relative;
+        width: 100%;
+        height: clamp(360px, 52vw, 720px);
+        overflow: hidden;
+        background: var(--color-sage-100);
+    }
+
+    .concert-hero-image::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+                to bottom,
+                transparent 65%,
+                rgba(0, 0, 0, 0.12)
+        );
+        pointer-events: none;
+    }
+
+    .concert-hero-image img {
+        width: 100%;
+        height: 100%;
+        display: block;
+        object-fit: cover;
+        object-position: center;
+        transition: transform 1.4s ease;
+    }
+
+    .concert-hero-image:hover img {
+        transform: scale(1.015);
+    }
+
+
+    /* ================================
+       UPCOMING CONCERTS
+    ================================ */
+
+    .upcoming-section {
+        padding: 8rem 0;
+        background: var(--color-cream);
     }
 
     .section-heading {
-        max-width: 700px;
-
+        display: grid;
+        grid-template-columns: 1.2fr 0.8fr;
+        gap: 5rem;
+        align-items: end;
         margin-bottom: 4rem;
     }
 
     .section-heading h2,
-    .gallery-heading h2,
-    .student-copy h2 {
-        color: var(--color-sage-700);
+    .student-title h2,
+    .gallery-heading h2 {
+        font-size: clamp(2.8rem, 5vw, 5rem);
+    }
+
+    .section-description {
+        max-width: 430px;
+        margin: 0 0 0.4rem;
+        font-family: var(--font-sans);
+        font-size: 1rem;
+        line-height: 1.8;
+        color: var(--color-text-soft);
     }
 
     .concert-list {
         display: flex;
         flex-direction: column;
-
-        gap: 3rem;
+        gap: 2rem;
     }
 
     .empty-state {
-        padding:
-                clamp(4rem, 8vw, 7rem)
-                2rem;
-
-        border-top: 1px solid var(--border-soft);
-        border-bottom: 1px solid var(--border-soft);
-
-        text-align: center;
+        display: grid;
+        grid-template-columns: auto 1fr;
+        gap: 2rem;
+        align-items: center;
+        padding: 3rem;
+        border: 1px solid var(--border-soft);
+        background: var(--color-sage-100);
     }
 
-    .empty-number {
-        margin-bottom: 1.5rem;
-
-        color: var(--color-sage-300);
-
+    .empty-symbol {
+        display: grid;
+        place-items: center;
+        width: 76px;
+        height: 76px;
+        border: 1px solid var(--color-sage-300);
+        border-radius: 50%;
         font-family: var(--font-serif);
-        font-size: 2.5rem;
-    }
-
-    .empty-state h3 {
+        font-size: 2rem;
         color: var(--color-sage-700);
     }
 
-    .empty-state p:last-child {
-        margin: 1rem 0 0;
+    .empty-label {
+        margin: 0 0 0.5rem;
+        font-family: var(--font-sans);
+        font-size: 0.68rem;
+        font-weight: 600;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--color-sage-700);
+    }
 
+    .empty-state h3 {
+        margin: 0 0 0.75rem;
+        font-family: var(--font-serif);
+        font-size: clamp(1.5rem, 2vw, 2rem);
+        font-weight: 400;
+        color: var(--color-text);
+    }
+
+    .empty-state p:last-child {
+        max-width: 520px;
+        margin: 0;
+        font-family: var(--font-sans);
+        line-height: 1.7;
         color: var(--color-text-soft);
     }
 
-    .student-concerts {
-        padding-block: clamp(6rem, 10vw, 10rem);
+
+    /* ================================
+       STUDENT CONCERTS
+    ================================ */
+
+    .student-section {
+        padding: 9rem 0;
+        background: var(--color-sage-100);
     }
 
     .student-grid {
         display: grid;
-        grid-template-columns: 160px 1fr;
-
-        gap: clamp(3rem, 7vw, 8rem);
+        grid-template-columns: 0.9fr 1.1fr;
+        gap: clamp(4rem, 10vw, 10rem);
+        align-items: start;
     }
 
-    .section-number {
-        color: var(--color-sage-300);
+    .student-title {
+        position: sticky;
+        top: calc(var(--navbar-height) + 3rem);
     }
 
-    .section-number p {
-        margin-bottom: 0.4rem;
-
-        font-family: var(--font-serif);
-        font-size: 2rem;
+    .student-content {
+        max-width: 600px;
     }
 
-    .section-number span {
-        font-size: 0.7rem;
-        letter-spacing: 0.16em;
-        text-transform: uppercase;
-    }
-
-    .student-copy {
-        max-width: 760px;
-    }
-
-    .student-copy h2 {
-        margin-bottom: 2.5rem;
-    }
-
-    .student-copy p {
-        max-width: 680px;
-
-        color: var(--color-text-soft);
-
+    .student-content p {
+        margin: 0 0 1.5rem;
+        font-family: var(--font-sans);
+        font-size: 1rem;
         line-height: 1.85;
+        color: var(--color-text-soft);
     }
+
+    .student-content .lead {
+        font-family: var(--font-serif);
+        font-size: clamp(1.45rem, 2.2vw, 2rem);
+        line-height: 1.45;
+        color: var(--color-text);
+    }
+
+    .text-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 1rem;
+        margin-top: 1.5rem;
+        padding-bottom: 0.4rem;
+        border-bottom: 1px solid var(--color-sage-700);
+        font-family: var(--font-sans);
+        font-size: 0.82rem;
+        font-weight: 600;
+        letter-spacing: 0.06em;
+        text-decoration: none;
+        color: var(--color-sage-700);
+        transition:
+                gap var(--transition-fast),
+                opacity var(--transition-fast);
+    }
+
+    .text-link:hover {
+        gap: 1.35rem;
+        opacity: 0.7;
+    }
+
+
+    /* ================================
+       GALLERY
+    ================================ */
 
     .gallery-section {
-        padding-block: clamp(6rem, 10vw, 10rem);
-
+        padding: 9rem 0;
         background: var(--color-cream);
     }
 
     .gallery-heading {
-        display: grid;
-        grid-template-columns: 1fr 0.7fr;
-
-        align-items: end;
-
-        gap: 4rem;
-
-        margin-bottom: 4rem;
+        max-width: 720px;
+        margin-bottom: 4.5rem;
     }
 
     .gallery-heading p:last-child {
-        max-width: 450px;
-
-        color: var(--color-text-soft);
-
+        max-width: 520px;
+        margin: 2rem 0 0;
+        font-family: var(--font-sans);
+        font-size: 1rem;
         line-height: 1.8;
+        color: var(--color-text-soft);
     }
 
-    @media (max-width: 800px) {
-        .intro {
-            padding-top: 5rem;
-        }
 
-        .student-grid,
-        .gallery-heading {
+    /* ================================
+       TABLET
+    ================================ */
+
+    @media (max-width: 900px) {
+        .section-heading {
             grid-template-columns: 1fr;
+            gap: 2rem;
         }
 
         .student-grid {
-            gap: 2.5rem;
+            grid-template-columns: 1fr;
+            gap: 3.5rem;
         }
 
-        .section-number {
-            display: flex;
-            align-items: center;
+        .student-title {
+            position: static;
+        }
+    }
 
-            gap: 1rem;
+
+    /* ================================
+       MOBILE
+    ================================ */
+
+    @media (max-width: 768px) {
+        .concert-header {
+            padding: 6.5rem 0 4rem;
         }
 
-        .section-number p {
-            margin: 0;
+        h1 {
+            font-size: clamp(3rem, 14vw, 4.6rem);
+        }
+
+        .intro {
+            margin-top: 2rem;
+            font-size: 1rem;
+        }
+
+        .concert-hero-image {
+            height: 52vh;
+            min-height: 320px;
+            max-height: 500px;
+        }
+
+        .upcoming-section,
+        .student-section,
+        .gallery-section {
+            padding: 5.5rem 0;
+        }
+
+        .section-heading {
+            margin-bottom: 3rem;
+        }
+
+        .section-heading h2,
+        .student-title h2,
+        .gallery-heading h2 {
+            font-size: clamp(2.7rem, 12vw, 4rem);
+        }
+
+        .empty-state {
+            grid-template-columns: 1fr;
+            padding: 2rem;
+        }
+
+        .empty-symbol {
+            width: 60px;
+            height: 60px;
+            font-size: 1.6rem;
         }
 
         .gallery-heading {
-            gap: 1.5rem;
+            margin-bottom: 3rem;
         }
     }
 </style>

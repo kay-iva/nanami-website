@@ -2,8 +2,8 @@
 
     const navItems = [
         { label: 'Klavier-Unterricht', href: '/teaching' },
-        { label: 'Konzerte', href: '/konzerte' },
-        { label: 'Musik-Gruppe', href: '/musik-gruppe' },
+        { label: 'Konzerte', href: '/concerts' },
+        { label: 'Musik-Gruppe', href: '/music-group' },
         { label: 'Kontakt', href: '/contact' }
     ];
 

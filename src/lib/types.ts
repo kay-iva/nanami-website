@@ -7,3 +7,8 @@ export interface Concert {
 	image?: string;
 	ticketUrl?: string;
 }
+
+export interface GalleryImage {
+	src: string;
+	alt: string;
+}
