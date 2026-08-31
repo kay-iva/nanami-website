@@ -1,9 +1,11 @@
 <script lang="ts">
     import ConcertCard from '$lib/components/ConcertCard.svelte';
     import PhotoGallery from '$lib/components/PhotoGallery.svelte';
-    import { concertGallery } from '$lib/data/concertGallery';
 
     import type { Concert } from '$lib/types';
+    import type { PageData } from './$types';
+
+    let { data }: { data: PageData } = $props();
 
     const upcomingConcerts: Concert[] = [
         /*
@@ -19,7 +21,6 @@
         }
         */
     ];
-
 </script>
 
 <svelte:head>
@@ -162,7 +163,13 @@
                 </p>
             </div>
 
-            <PhotoGallery images={concertGallery} />
+            {#if data.galleryImages.length > 0}
+                <PhotoGallery images={data.galleryImages} />
+            {:else}
+                <p class="gallery-empty">
+                    Weitere Konzertimpressionen folgen bald.
+                </p>
+            {/if}
         </div>
     </section>
 </main>
@@ -429,6 +436,15 @@
     .gallery-description {
         max-width: 520px;
         margin: 2rem 0 0;
+        font-family: var(--font-sans);
+        font-size: 1rem;
+        line-height: 1.8;
+        color: var(--color-text-soft);
+    }
+
+    .gallery-empty {
+        margin: 0;
+        padding: 3rem 0;
         font-family: var(--font-sans);
         font-size: 1rem;
         line-height: 1.8;
