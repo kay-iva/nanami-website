@@ -5,47 +5,81 @@
         'kaloyan-ivanov-d8shly/klavier-einzelstunde-30-min';
 
     onMount(() => {
-        const script = document.createElement('script');
+        const win = window as any;
 
-        script.src = 'https://app.cal.com/embed/embed.js';
-        script.async = true;
+        (function (C: any, A: string, L: string) {
+            const p = (a: any, ar: any) => {
+                a.q.push(ar);
+            };
 
-        script.onload = () => {
-            const Cal = window.Cal;
+            const d = C.document;
 
-            if (!Cal) {
-                console.error('Cal.com embed could not be loaded.');
-                return;
-            }
+            C.Cal =
+                C.Cal ||
+                function () {
+                    const cal = C.Cal;
+                    const args = arguments;
 
-            Cal('init', 'booking', {
-                origin: 'https://cal.com'
-            });
+                    if (!cal.loaded) {
+                        cal.ns = {};
+                        cal.q = cal.q || [];
 
-            Cal('inline', {
-                elementOrSelector: '#cal-booking',
-                calLink,
-                config: {
-                    layout: 'month_view'
-                }
-            });
+                        const script = d.createElement('script');
+                        script.src = A;
+                        d.head.appendChild(script);
 
-            Cal('ui', {
-                styles: {
-                    branding: {
-                        brandColor: '#66756a'
+                        cal.loaded = true;
                     }
-                },
-                hideEventTypeDetails: false,
+
+                    if (args[0] === L) {
+                        const api: any = function () {
+                            p(api, arguments);
+                        };
+
+                        const namespace = args[1];
+
+                        api.q = api.q || [];
+
+                        if (typeof namespace === 'string') {
+                            cal.ns[namespace] =
+                                cal.ns[namespace] || api;
+
+                            p(cal.ns[namespace], args);
+                            p(cal, ['initNamespace', namespace]);
+
+                            return;
+                        }
+                    }
+
+                    p(cal, args);
+                };
+        })(
+            win,
+            'https://app.cal.com/embed/embed.js',
+            'init'
+        );
+
+        win.Cal('init', 'booking', {
+            origin: 'https://cal.com'
+        });
+
+        win.Cal.ns.booking('inline', {
+            elementOrSelector: '#cal-booking',
+            calLink,
+            config: {
                 layout: 'month_view'
-            });
-        };
+            }
+        });
 
-        document.head.appendChild(script);
-
-        return () => {
-            script.remove();
-        };
+        win.Cal.ns.booking('ui', {
+            styles: {
+                branding: {
+                    brandColor: '#66756a'
+                }
+            },
+            hideEventTypeDetails: false,
+            layout: 'month_view'
+        });
     });
 </script>
 
