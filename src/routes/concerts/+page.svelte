@@ -1,7 +1,9 @@
 <script lang="ts">
     import ConcertCard from '$lib/components/ConcertCard.svelte';
     import PhotoGallery from '$lib/components/PhotoGallery.svelte';
-    import type { Concert, GalleryImage } from '$lib/types';
+    import { concertGallery } from '$lib/data/concertGallery';
+
+    import type { Concert } from '$lib/types';
 
     const upcomingConcerts: Concert[] = [
         /*
@@ -18,32 +20,6 @@
         */
     ];
 
-    const galleryImages: GalleryImage[] = [
-        {
-            src: '/images/concerts/gallery-01.jpg',
-            alt: 'Impression eines Klavierkonzerts'
-        },
-        {
-            src: '/images/concerts/gallery-02.jpg',
-            alt: 'Klavier auf der Konzertbühne'
-        },
-        {
-            src: '/images/concerts/gallery-03.jpg',
-            alt: 'Impression eines Schülerkonzerts'
-        },
-        {
-            src: '/images/concerts/gallery-04.jpg',
-            alt: 'Konzertmoment am Klavier'
-        },
-        {
-            src: '/images/concerts/gallery-05.jpg',
-            alt: 'Auftritt bei einem Klavierkonzert'
-        },
-        {
-            src: '/images/concerts/gallery-06.jpg',
-            alt: 'Impression aus einem Konzertsaal'
-        }
-    ];
 </script>
 
 <svelte:head>
@@ -186,7 +162,7 @@
                 </p>
             </div>
 
-            <PhotoGallery images={galleryImages} />
+            <PhotoGallery images={concertGallery} />
         </div>
     </section>
 </main>
