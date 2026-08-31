@@ -15,20 +15,15 @@
     const yearlyPlans = [
         {
             duration: '30 min',
-            price: '60 €',
-            note: 'für Kinder bis 10 Jahre'
-        },
-        {
-            duration: '30 min',
-            price: '65 €'
+            price: '80 €'
         },
         {
             duration: '45 min',
-            price: '100 €'
+            price: '120 €'
         },
         {
             duration: '60 min',
-            price: '135 €'
+            price: '160 €'
         }
     ];
 
@@ -36,17 +31,17 @@
         {
             amount: '5 Einheiten',
             prices: [
-                { duration: '30 min', price: '150 €' },
-                { duration: '45 min', price: '225 €' },
-                { duration: '60 min', price: '300 €' }
+                { duration: '30 min', price: '175 €' },
+                { duration: '45 min', price: '263 €' },
+                { duration: '60 min', price: '350 €' }
             ]
         },
         {
             amount: '10 Einheiten',
             prices: [
-                { duration: '30 min', price: '300 €' },
-                { duration: '45 min', price: '450 €' },
-                { duration: '60 min', price: '600 €' }
+                { duration: '30 min', price: '350 €' },
+                { duration: '45 min', price: '525 €' },
+                { duration: '60 min', price: '700 €' }
             ]
         }
     ];
@@ -296,10 +291,6 @@
                             <div class="price-row">
                                 <div>
                                     <strong>{plan.duration}</strong>
-
-                                    {#if plan.note}
-                                        <small>{plan.note}</small>
-                                    {/if}
                                 </div>
 
                                 <span>{plan.price} / Monat</span>
@@ -369,11 +360,6 @@
                 </article>
 
             </div>
-
-            <p class="price-note">
-                Die angeführten Preise stammen aus der bisherigen
-                Preisliste und werden derzeit aktualisiert.
-            </p>
 
         </div>
     </section>
