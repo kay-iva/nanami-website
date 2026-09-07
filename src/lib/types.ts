@@ -12,3 +12,10 @@ export interface GalleryImage {
 	src: string;
 	alt: string;
 }
+
+export interface HeroVideo {
+	webm: string;
+	mp4: string;
+	poster: string;
+	alt: string;
+}

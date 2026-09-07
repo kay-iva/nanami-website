@@ -1,14 +1,42 @@
+<script lang="ts">
+    import type { HeroVideo } from '$lib/types';
+
+    interface Props {
+        video?: HeroVideo | null;
+    }
+
+    let { video = null }: Props = $props();
+</script>
+
 <section class="hero">
-    <img
-            class="hero-image"
-            src="/images/hero.jpg"
-            alt="Nanami Shiraki am Klavier"
-    />
+    {#if video}
+        <video
+                class="hero-media"
+                poster={video.poster}
+                autoplay
+                muted
+                loop
+                playsinline
+                preload="metadata"
+                aria-hidden="true"
+        >
+            <source src={video.webm} type="video/webm" />
+            <source src={video.mp4} type="video/mp4" />
+        </video>
+    {:else}
+        <img
+                class="hero-media fallback-image"
+                src="/images/hero.jpg"
+                alt="Nanami Shiraki am Klavier"
+        />
+    {/if}
 
     <div class="overlay"></div>
 
     <div class="hero-content">
-        <p class="eyebrow">Pianistin · Klavierpädagogin</p>
+        <p class="eyebrow">
+            Pianistin · Klavierpädagogin
+        </p>
 
         <h1>
             Nanami
@@ -40,10 +68,10 @@
         min-height: 680px;
 
         overflow: hidden;
-        background: #4a5a4f;
+        background: var(--color-sage-700);
     }
 
-    .hero-image {
+    .hero-media {
         position: absolute;
         inset: 0;
 
@@ -52,7 +80,9 @@
 
         object-fit: cover;
         object-position: center;
+    }
 
+    .fallback-image {
         animation: heroZoom 28s ease-in-out infinite alternate;
     }
 
@@ -88,14 +118,15 @@
 
         max-width: 750px;
 
-        color: #f7f4ed;
+        color: var(--color-cream);
     }
 
     .eyebrow {
         margin: 0 0 20px;
 
-        font-family: Arial, sans-serif;
+        font-family: var(--font-sans);
         font-size: 0.78rem;
+
         letter-spacing: 0.18em;
         text-transform: uppercase;
     }
@@ -103,7 +134,7 @@
     h1 {
         margin: 0;
 
-        font-family: Georgia, 'Times New Roman', serif;
+        font-family: var(--font-serif);
         font-size: clamp(4rem, 9vw, 8.5rem);
         font-weight: 400;
         line-height: 0.78;
@@ -123,7 +154,7 @@
 
         margin: 40px 0 30px;
 
-        font-family: Arial, sans-serif;
+        font-family: var(--font-sans);
         font-size: clamp(1rem, 1.3vw, 1.2rem);
         font-weight: 300;
         line-height: 1.6;
@@ -139,19 +170,18 @@
         border: 1px solid rgba(255, 255, 255, 0.6);
 
         color: inherit;
-        font-family: Arial, sans-serif;
+        font-family: var(--font-sans);
         font-size: 0.8rem;
         letter-spacing: 0.06em;
-        text-decoration: none;
 
         transition:
-                background 200ms ease,
-                color 200ms ease;
+                background var(--transition-fast),
+                color var(--transition-fast);
     }
 
     .cta:hover {
-        background: #f7f4ed;
-        color: #4a5a4f;
+        background: var(--color-cream);
+        color: var(--color-sage-700);
     }
 
     .arrow {
@@ -170,7 +200,7 @@
 
         color: rgba(255, 255, 255, 0.75);
 
-        font-family: Arial, sans-serif;
+        font-family: var(--font-sans);
         font-size: 0.65rem;
         letter-spacing: 0.15em;
         text-transform: uppercase;
@@ -210,7 +240,11 @@
     }
 
     @media (prefers-reduced-motion: reduce) {
-        .hero-image {
+        .hero video {
+            display: none;
+        }
+
+        .fallback-image {
             animation: none;
         }
     }

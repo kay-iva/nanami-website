@@ -1,11 +1,6 @@
 <script lang="ts">
     import ConcertCard from '$lib/components/ConcertCard.svelte';
-    import PhotoGallery from '$lib/components/PhotoGallery.svelte';
-
     import type { Concert } from '$lib/types';
-    import type { PageData } from './$types';
-
-    let { data }: { data: PageData } = $props();
 
     const upcomingConcerts: Concert[] = [
         /*
@@ -146,32 +141,7 @@
         </div>
     </section>
 
-    <!-- GALLERY -->
-    <section class="gallery-section">
-        <div class="page-container">
-            <div class="gallery-heading">
-                <p class="eyebrow">Impressionen</p>
 
-                <h2>
-                    Momente, die
-                    <span>in Erinnerung bleiben.</span>
-                </h2>
-
-                <p class="gallery-description">
-                    Einblicke in vergangene Konzerte,
-                    Auftritte und gemeinsame musikalische Momente.
-                </p>
-            </div>
-
-            {#if data.galleryImages.length > 0}
-                <PhotoGallery images={data.galleryImages} />
-            {:else}
-                <p class="gallery-empty">
-                    Weitere Konzertimpressionen folgen bald.
-                </p>
-            {/if}
-        </div>
-    </section>
 </main>
 
 <style>
@@ -285,8 +255,7 @@
     }
 
     .section-heading h2,
-    .student-title h2,
-    .gallery-heading h2 {
+    .student-title h2 {
         font-size: clamp(2.8rem, 5vw, 5rem);
     }
 
@@ -419,37 +388,7 @@
     }
 
 
-    /* ================================
-       GALLERY
-    ================================ */
 
-    .gallery-section {
-        padding: 9rem 0;
-        background: var(--color-sage-100);
-    }
-
-    .gallery-heading {
-        max-width: 760px;
-        margin-bottom: 4.5rem;
-    }
-
-    .gallery-description {
-        max-width: 520px;
-        margin: 2rem 0 0;
-        font-family: var(--font-sans);
-        font-size: 1rem;
-        line-height: 1.8;
-        color: var(--color-text-soft);
-    }
-
-    .gallery-empty {
-        margin: 0;
-        padding: 3rem 0;
-        font-family: var(--font-sans);
-        font-size: 1rem;
-        line-height: 1.8;
-        color: var(--color-text-soft);
-    }
 
 
     /* ================================
@@ -521,8 +460,7 @@
         }
 
         .upcoming-section,
-        .student-section,
-        .gallery-section {
+        .student-section {
             padding: 5.5rem 0;
         }
 
@@ -531,8 +469,7 @@
         }
 
         .section-heading h2,
-        .student-title h2,
-        .gallery-heading h2 {
+        .student-title h2 {
             font-size: clamp(2.7rem, 12vw, 4rem);
         }
 
@@ -547,8 +484,5 @@
             font-size: 1.6rem;
         }
 
-        .gallery-heading {
-            margin-bottom: 3rem;
-        }
     }
 </style>
