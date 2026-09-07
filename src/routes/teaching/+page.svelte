@@ -7,9 +7,11 @@
 </svelte:head>
 
 <script lang="ts">
-    /*
-     * Preise vor Veröffentlichung unbedingt mit Nanami abklären.
-     */
+    import GallerySection from '$lib/components/GallerySection.svelte';
+    import type { PageData } from './$types';
+
+    let { data }: { data: PageData } = $props();
+
 
     const yearlyPlans = [
         {
@@ -483,6 +485,15 @@
         </div>
     </section>
 
+    {#if data.galleryImages.length}
+        <GallerySection
+                images={data.galleryImages}
+                eyebrow="Unterricht"
+                title="Musik gemeinsam"
+                italicTitle="entdecken."
+                description="Einblicke in den Klavierunterricht und gemeinsame musikalische Momente."
+        />
+    {/if}
 </main>
 
 

@@ -8,16 +8,21 @@
     let { data }: { data: PageData } = $props();
 </script>
 
+<svelte:head>
+    <title>Nanami Shiraki | Pianistin & Klavierpädagogin</title>
+    <meta name="description" content="Nanami Shiraki – Pianistin und Klavierpädagogin in Wien." />
+</svelte:head>
+
 <Hero video={data.heroVideo} />
-
 <About />
-
 <Teaching />
 
-<GallerySection
-        images={data.galleryImages}
-        eyebrow="Impressionen"
-        title="Momente, die"
-        italicTitle="in Erinnerung bleiben."
-        description="Einblicke in vergangene Konzerte, Auftritte und gemeinsame musikalische Momente."
-/>
+{#if data.galleryImages.length}
+    <GallerySection
+            images={data.galleryImages}
+            eyebrow="Impressionen"
+            title="Momente, die"
+            italicTitle="in Erinnerung bleiben."
+            description="Einblicke in vergangene Konzerte, Auftritte und gemeinsame musikalische Momente."
+    />
+{/if}

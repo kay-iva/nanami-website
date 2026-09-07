@@ -1,6 +1,10 @@
 <script lang="ts">
     import ConcertCard from '$lib/components/ConcertCard.svelte';
+    import GallerySection from '$lib/components/GallerySection.svelte';
     import type { Concert } from '$lib/types';
+    import type { PageData } from './$types';
+
+    let { data }: { data: PageData } = $props();
 
     const upcomingConcerts: Concert[] = [
         /*
@@ -9,8 +13,7 @@
             date: '14. Dezember 2026',
             time: '18:00 Uhr',
             location: 'Wien',
-            description:
-                'Ein gemeinsamer Konzertabend mit Schülerinnen und Schülern.',
+            description: 'Ein gemeinsamer Konzertabend mit Schülerinnen und Schülern.',
             image: '/images/concerts/concert-example.jpg',
             ticketUrl: 'https://...'
         }
@@ -141,6 +144,15 @@
         </div>
     </section>
 
+    {#if data.galleryImages.length}
+        <GallerySection
+                images={data.galleryImages}
+                eyebrow="Impressionen"
+                title="Vergangene"
+                italicTitle="Konzertmomente."
+                description="Einblicke in Konzerte, Auftritte und gemeinsame musikalische Erlebnisse."
+        />
+    {/if}
 
 </main>
 
