@@ -2,34 +2,21 @@
     import type { GalleryImage } from '$lib/types';
 
     let { images }: { images: GalleryImage[] } = $props();
-
-    let selectedImage = $state<GalleryImage | null>(null);
+    let selected = $state<GalleryImage | null>(null);
 </script>
 
 <div class="gallery">
     {#each images as image}
-        <button class="gallery-item" type="button" onclick={() => (selectedImage = image)}>
+        <button type="button" onclick={() => (selected = image)}>
             <img src={image.src} alt={image.alt} loading="lazy" />
         </button>
     {/each}
 </div>
 
-{#if selectedImage}
-    <div class="lightbox" role="presentation" onclick={() => (selectedImage = null)}>
-        <button
-                class="close"
-                type="button"
-                aria-label="Bild schließen"
-                onclick={() => (selectedImage = null)}
-        >
-            ×
-        </button>
-
-        <img
-                src={selectedImage.src}
-                alt={selectedImage.alt}
-                onclick={(event) => event.stopPropagation()}
-        />
+{#if selected}
+    <div class="lightbox" role="presentation" onclick={() => (selected = null)}>
+        <button class="close" type="button" aria-label="Bild schließen" onclick={() => (selected = null)}>×</button>
+        <img src={selected.src} alt={selected.alt} onclick={(e) => e.stopPropagation()} />
     </div>
 {/if}
 
@@ -40,35 +27,25 @@
         gap: 1rem;
     }
 
-    .gallery-item {
+    .gallery button {
         grid-column: span 4;
         overflow: hidden;
         background: transparent;
     }
 
-    .gallery-item:nth-child(5n + 1) {
-        grid-column: span 5;
-    }
+    .gallery button:nth-child(5n + 1) { grid-column: span 5; }
+    .gallery button:nth-child(5n + 2),
+    .gallery button:nth-child(5n + 4) { grid-column: span 7; }
+    .gallery button:nth-child(5n + 5) { grid-column: span 5; }
 
-    .gallery-item:nth-child(5n + 2),
-    .gallery-item:nth-child(5n + 4) {
-        grid-column: span 7;
-    }
-
-    .gallery-item:nth-child(5n + 5) {
-        grid-column: span 5;
-    }
-
-    .gallery-item img {
+    .gallery img {
         width: 100%;
         aspect-ratio: 4 / 3;
         object-fit: cover;
-        transition:
-                transform 700ms ease,
-                opacity var(--transition-fast);
+        transition: transform 700ms ease, opacity var(--transition-fast);
     }
 
-    .gallery-item:hover img {
+    .gallery button:hover img {
         transform: scale(1.035);
         opacity: 0.92;
     }
@@ -96,9 +73,6 @@
         position: absolute;
         top: 1.5rem;
         right: 1.5rem;
-        display: flex;
-        align-items: center;
-        justify-content: center;
         width: 48px;
         height: 48px;
         border-radius: 50%;
@@ -108,17 +82,9 @@
     }
 
     @media (max-width: 800px) {
-        .gallery {
-            grid-template-columns: repeat(2, 1fr);
-        }
-
-        .gallery-item,
-        .gallery-item:nth-child(n) {
-            grid-column: span 1;
-        }
-
-        .gallery-item:nth-child(3n + 1) {
-            grid-column: span 2;
-        }
+        .gallery { grid-template-columns: repeat(2, 1fr); }
+        .gallery button,
+        .gallery button:nth-child(n) { grid-column: span 1; }
+        .gallery button:nth-child(3n + 1) { grid-column: span 2; }
     }
 </style>

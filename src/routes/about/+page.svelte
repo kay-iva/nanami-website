@@ -1,3 +1,10 @@
+<script lang="ts">
+    import GallerySection from '$lib/components/GallerySection.svelte';
+    import type { PageData } from './$types';
+
+    let { data }: { data: PageData } = $props();
+</script>
+
 <svelte:head>
     <title>Über mich | Nanami Shiraki</title>
     <meta
@@ -211,6 +218,16 @@
             </div>
         </div>
     </section>
+
+    {#if data.galleryImages.length}
+        <GallerySection
+                images={data.galleryImages}
+                eyebrow="Impressionen"
+                title="Einblicke in meine"
+                italicTitle="musikalische Welt."
+                description="Momente aus Musik, Unterricht und meinem musikalischen Weg."
+        />
+    {/if}
 </main>
 
 <style>
