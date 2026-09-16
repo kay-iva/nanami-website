@@ -1,5 +1,6 @@
 import type { PageServerLoad } from './$types';
 import { getImageGallery } from '$lib/server/cloudinary';
+import { musicCourses } from '$lib/data/musicCourses';
 
 export const load: PageServerLoad = async () => {
 	const galleryImages = await getImageGallery('nanami-site/galleries/music-group').catch(
@@ -9,5 +10,5 @@ export const load: PageServerLoad = async () => {
 		}
 	);
 
-	return { galleryImages };
+	return { courses: musicCourses, galleryImages };
 };

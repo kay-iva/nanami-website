@@ -3,44 +3,87 @@
     import type { PageData } from './$types';
 
     let { data }: { data: PageData } = $props();
-
-    const registrationUrl = '#'; // TODO: Edoobox-Link einsetzen
+    let expanded = $state<string | null>(null);
 </script>
 
 <svelte:head>
-    <title>Musikgruppe | Nanami Shiraki</title>
+    <title>Musikgruppen | Nanami Shiraki</title>
     <meta
             name="description"
-            content="Musik, Bewegung und gemeinsames Erleben für Babys und ihre Eltern in Wien."
+            content="Musik, Bewegung und gemeinsames Erleben für Babys, Kinder und ihre Eltern in Wien."
     />
 </svelte:head>
 
 <main>
     <section class="hero">
-        <div class="page-container hero-grid">
-            <div>
-                <p class="eyebrow">Musikgruppe</p>
-                <h1>Gemeinsam Musik <span>entdecken.</span></h1>
-                <p class="lead">
-                    Musik, Bewegung und Nähe – erste musikalische Erfahrungen für Babys gemeinsam mit Mama oder Papa.
-                </p>
+        <div class="page-container">
+            <p class="eyebrow">Musikgruppen</p>
+            <h1>Gemeinsam Musik <span>entdecken.</span></h1>
+            <p class="lead">
+                Musik, Bewegung, Nähe und gemeinsames Erleben – spielerische musikalische Erfahrungen für die Kleinsten und ihre Eltern.
+            </p>
+        </div>
+    </section>
+
+    <section class="courses">
+        <div class="page-container">
+            <div class="heading">
+                <p class="eyebrow">Aktuelle Kurse</p>
+                <h2>Unsere nächsten <span>Musikmomente.</span></h2>
             </div>
 
-            <div class="course-card">
-                <p class="label">Aktueller Kurs</p>
-                <h2>Rhythmik-SpielWiese</h2>
-                <p class="age">für Babys ca. 4–7 Monate & Mama/Papa</p>
+            <div class="course-list">
+                {#each data.courses as course}
+                    <article class="course">
+                        <div class="course-main">
+                            <div>
+                                <p class="course-age">{course.age}</p>
+                                <h3>{course.title}</h3>
+                                <p class="description">{course.description}</p>
+                            </div>
 
-                <div class="facts">
-                    <div><span>Tag</span><strong>Donnerstag</strong></div>
-                    <div><span>Zeit</span><strong>09:10–10:00 Uhr</strong></div>
-                    <div><span>Umfang</span><strong>10 Einheiten · 50 Min.</strong></div>
-                    <div><span>Zeitraum</span><strong>24.09.–03.12.2026</strong></div>
-                    <div><span>Ort</span><strong>RhythmikStudio, 1030 Wien</strong></div>
-                    <div><span>Preis</span><strong>€ 215</strong></div>
-                </div>
+                            <div class="course-summary">
+                                <div><span>Einheiten</span><strong>{course.dates.length}</strong></div>
+                                <div><span>Dauer</span><strong>{course.duration} Min.</strong></div>
+                                <div><span>Zeit</span><strong>{course.time}</strong></div>
+                                <div><span>Preis</span><strong>€ {course.price}</strong></div>
+                            </div>
+                        </div>
 
-                <a class="cta" href={registrationUrl}>Jetzt anmelden <span>↗</span></a>
+                        <div class="actions">
+                            <button
+                                    type="button"
+                                    class="details"
+                                    onclick={() => (expanded = expanded === course.id ? null : course.id)}
+                            >
+                                {expanded === course.id ? 'Termine schließen' : 'Alle Termine'}
+                                <span>{expanded === course.id ? '−' : '+'}</span>
+                            </button>
+
+                            <a class="book" href={`/music-group/book/${course.id}`}>
+                                Kurs buchen <span>↗</span>
+                            </a>
+                        </div>
+
+                        {#if expanded === course.id}
+                            <div class="expanded">
+                                <div>
+                                    <p class="small-title">Termine</p>
+                                    <div class="dates">
+                                        {#each course.dates as date, i}
+                                            <div><span>{String(i + 1).padStart(2, '0')}</span><strong>{date}</strong></div>
+                                        {/each}
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <p class="small-title">Ort</p>
+                                    <p class="location">{course.location}</p>
+                                </div>
+                            </div>
+                        {/if}
+                    </article>
+                {/each}
             </div>
         </div>
     </section>
@@ -54,52 +97,15 @@
 
             <div class="copy">
                 <p>
-                    Schon im Mutterleib sammeln Babys erste Erfahrungen mit Musik und Bewegung. Sie spüren Bewegungen, hören den Herzschlag und die Stimme ihrer Mutter und erleben vertraute Klänge.
+                    Schon früh sammeln Babys Erfahrungen mit Musik und Bewegung. Sie hören vertraute Stimmen, Rhythmen und Klänge und erleben Musik gemeinsam mit ihren Bezugspersonen.
                 </p>
                 <p>
-                    In einer freundlichen und wohlfühlenden Atmosphäre entdecken wir gemeinsam Klänge, Kinderlieder sowie Bewegungs- und Fingerspiele.
+                    In einer freundlichen Atmosphäre entdecken wir Kinderlieder, Bewegungs- und Fingerspiele, neue Melodien und gemeinsames rhythmisches Bewegen.
                 </p>
                 <p>
-                    Wir lernen neue Melodien kennen und tanzen einfache Bewegungen, die uns sanft und rhythmisch miteinander in Kontakt bringen.
+                    Dabei gibt es Raum für Wiegen, Kuscheln, Ruhephasen, gemeinsames Aktivsein und den Austausch zwischen Eltern.
                 </p>
             </div>
-        </div>
-    </section>
-
-    <section class="experience">
-        <div class="page-container">
-            <div class="experience-heading">
-                <p class="eyebrow">Gemeinsam erleben</p>
-                <h2>Wiegen, Kuscheln, Ruhephasen <span>und gemeinsames Aktivsein.</span></h2>
-            </div>
-
-            <div class="cards">
-                <article>
-                    <span>01</span>
-                    <h3>Klänge</h3>
-                    <p>Gemeinsam hören, entdecken und erste musikalische Eindrücke sammeln.</p>
-                </article>
-                <article>
-                    <span>02</span>
-                    <h3>Bewegung</h3>
-                    <p>Sanfte Bewegungen, Rhythmus und spielerischer Kontakt zwischen Eltern und Baby.</p>
-                </article>
-                <article>
-                    <span>03</span>
-                    <h3>Gemeinschaft</h3>
-                    <p>Raum für Austausch unter Eltern über Schönes, Lustiges, Bewegendes und Alltägliches.</p>
-                </article>
-            </div>
-        </div>
-    </section>
-
-    <section class="signup">
-        <div class="page-container signup-inner">
-            <div>
-                <p class="eyebrow">Rhythmik-SpielWiese</p>
-                <h2>Lust auf gemeinsame <span>Musikzeit?</span></h2>
-            </div>
-            <a class="cta dark" href={registrationUrl}>Zum Kurs anmelden <span>↗</span></a>
         </div>
     </section>
 
@@ -116,15 +122,23 @@
 
 <style>
     .hero {
-        padding: 9rem 0 8rem;
+        padding: 9rem 0 7rem;
         background: var(--color-cream);
     }
 
-    .hero-grid {
-        display: grid;
-        grid-template-columns: 1.15fr 0.85fr;
-        gap: clamp(4rem, 8vw, 9rem);
-        align-items: center;
+    .hero h1 {
+        max-width: 900px;
+        margin: 0;
+        font: 400 clamp(4rem, 8vw, 8rem)/0.88 var(--font-serif);
+        letter-spacing: -0.055em;
+        color: var(--color-text);
+    }
+
+    .hero h1 span,
+    h2 span {
+        display: block;
+        font-style: italic;
+        color: var(--color-sage-700);
     }
 
     .eyebrow {
@@ -135,98 +149,153 @@
         color: var(--color-sage-700);
     }
 
-    h1, h2 {
-        margin: 0;
-        font-family: var(--font-serif);
-        font-weight: 400;
-        color: var(--color-text);
-    }
-
-    h1 {
-        max-width: 760px;
-        font-size: clamp(4rem, 7vw, 7.5rem);
-        line-height: 0.9;
-        letter-spacing: -0.05em;
-    }
-
-    h1 span, h2 span {
-        display: block;
-        font-style: italic;
-        color: var(--color-sage-700);
-    }
-
     .lead {
-        max-width: 600px;
+        max-width: 650px;
         margin: 2.5rem 0 0;
         font: 1.1rem/1.8 var(--font-sans);
         color: var(--color-text-soft);
     }
 
-    .course-card {
-        padding: clamp(2rem, 4vw, 3.5rem);
+    .courses {
+        padding: 8rem 0;
         background: var(--color-white);
-        box-shadow: var(--shadow-soft);
     }
 
-    .course-card .label {
-        margin: 0 0 0.8rem;
-        font: 600 0.7rem var(--font-sans);
-        letter-spacing: 0.16em;
+    .heading {
+        max-width: 800px;
+        margin-bottom: 4.5rem;
+    }
+
+    h2 {
+        margin: 0;
+        font: 400 clamp(3rem, 5vw, 5.5rem)/0.95 var(--font-serif);
+        letter-spacing: -0.04em;
+        color: var(--color-text);
+    }
+
+    .course-list {
+        border-top: 1px solid var(--border-soft);
+    }
+
+    .course {
+        padding: 3rem 0;
+        border-bottom: 1px solid var(--border-soft);
+    }
+
+    .course-main {
+        display: grid;
+        grid-template-columns: 1.25fr 0.75fr;
+        gap: 5rem;
+    }
+
+    .course-age {
+        margin: 0 0 0.7rem;
+        font: 600 0.72rem var(--font-sans);
+        letter-spacing: 0.08em;
         text-transform: uppercase;
         color: var(--color-sage-700);
     }
 
-    .course-card h2 {
-        font-size: clamp(2rem, 3vw, 3rem);
-    }
-
-    .age {
-        margin: 0.5rem 0 2.5rem;
-        font: 1rem/1.5 var(--font-sans);
-        color: var(--color-text-soft);
-    }
-
-    .facts {
-        border-top: 1px solid var(--border-soft);
-    }
-
-    .facts div {
-        display: flex;
-        justify-content: space-between;
-        gap: 2rem;
-        padding: 0.9rem 0;
-        border-bottom: 1px solid var(--border-soft);
-        font-family: var(--font-sans);
-    }
-
-    .facts span {
-        color: var(--color-text-soft);
-    }
-
-    .facts strong {
-        text-align: right;
-        font-weight: 500;
+    h3 {
+        margin: 0;
+        font: 400 clamp(2.2rem, 4vw, 4rem) var(--font-serif);
         color: var(--color-text);
     }
 
-    .cta {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-top: 2rem;
-        padding: 1rem 1.2rem;
-        background: var(--color-sage-700);
-        color: var(--color-cream);
-        font: 500 0.82rem var(--font-sans);
-        letter-spacing: 0.05em;
-        transition: opacity var(--transition-fast);
+    .description,
+    .location,
+    .copy p {
+        font: 1rem/1.8 var(--font-sans);
+        color: var(--color-text-soft);
     }
 
-    .cta:hover { opacity: 0.85; }
+    .description {
+        margin: 1rem 0 0;
+    }
+
+    .course-summary {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .course-summary div {
+        padding: 1rem;
+        border: 1px solid var(--border-soft);
+        margin: 0 -1px -1px 0;
+    }
+
+    .course-summary span,
+    .small-title {
+        display: block;
+        margin-bottom: 0.35rem;
+        font: 600 0.65rem var(--font-sans);
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--color-text-soft);
+    }
+
+    .course-summary strong {
+        font: 500 0.9rem var(--font-sans);
+        color: var(--color-text);
+    }
+
+    .actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: 1rem;
+        margin-top: 2rem;
+    }
+
+    .actions button,
+    .actions a {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 2rem;
+        min-width: 180px;
+        padding: 0.95rem 1.1rem;
+        font: 500 0.78rem var(--font-sans);
+    }
+
+    .details {
+        border: 1px solid var(--border-soft);
+        background: transparent;
+        color: var(--color-text);
+    }
+
+    .book {
+        background: var(--color-sage-700);
+        color: var(--color-cream);
+    }
+
+    .expanded {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 5rem;
+        margin-top: 3rem;
+        padding: 3rem;
+        background: var(--color-sage-100);
+    }
+
+    .dates {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.6rem;
+    }
+
+    .dates div {
+        display: flex;
+        gap: 1rem;
+        font-family: var(--font-sans);
+    }
+
+    .dates span {
+        color: var(--color-sage-700);
+    }
 
     .about {
         padding: 9rem 0;
-        background: var(--color-sage-100);
+        background: var(--color-cream);
     }
 
     .about-grid {
@@ -235,115 +304,45 @@
         gap: clamp(4rem, 9vw, 10rem);
     }
 
-    .about h2, .experience h2, .signup h2 {
-        font-size: clamp(3rem, 5vw, 5.5rem);
-        line-height: 0.95;
-        letter-spacing: -0.04em;
-    }
-
     .copy p {
         margin: 0 0 1.5rem;
-        font: 1rem/1.85 var(--font-sans);
-        color: var(--color-text-soft);
     }
 
-    .experience {
-        padding: 9rem 0;
-        background: var(--color-white);
-    }
-
-    .experience-heading {
-        max-width: 900px;
-        margin-bottom: 5rem;
-    }
-
-    .cards {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        border-top: 1px solid var(--border-soft);
-    }
-
-    .cards article {
-        padding: 2.5rem;
-        border-right: 1px solid var(--border-soft);
-    }
-
-    .cards article:last-child { border-right: 0; }
-
-    .cards span {
-        font: 0.72rem var(--font-sans);
-        color: var(--color-sage-700);
-    }
-
-    .cards h3 {
-        margin: 2.5rem 0 1rem;
-        font: 400 2rem var(--font-serif);
-        color: var(--color-text);
-    }
-
-    .cards p {
-        margin: 0;
-        font: 0.95rem/1.7 var(--font-sans);
-        color: var(--color-text-soft);
-    }
-
-    .signup {
-        padding: 7rem 0;
-        background: var(--color-peach);
-    }
-
-    .signup-inner {
-        display: flex;
-        align-items: flex-end;
-        justify-content: space-between;
-        gap: 4rem;
-    }
-
-    .signup h2 { max-width: 800px; }
-
-    .dark {
-        flex: 0 0 260px;
-        margin: 0;
-    }
-
-    @media (max-width: 850px) {
+    @media (max-width: 800px) {
         .hero { padding: 6rem 0; }
+        .courses, .about { padding: 6rem 0; }
 
-        .hero-grid, .about-grid {
+        .course-main,
+        .about-grid,
+        .expanded {
             grid-template-columns: 1fr;
-            gap: 4rem;
+            gap: 3rem;
         }
 
-        .cards {
-            grid-template-columns: 1fr;
+        .actions {
+            justify-content: stretch;
         }
 
-        .cards article {
-            border-right: 0;
-            border-bottom: 1px solid var(--border-soft);
+        .actions button,
+        .actions a {
+            flex: 1;
         }
-
-        .signup-inner {
-            align-items: stretch;
-            flex-direction: column;
-        }
-
-        .dark { flex: auto; }
     }
 
     @media (max-width: 550px) {
-        .hero { padding: 4.5rem 0; }
+        .hero h1 { font-size: clamp(3.5rem, 17vw, 5rem); }
 
-        h1 { font-size: clamp(3.4rem, 17vw, 5rem); }
-
-        .facts div {
-            flex-direction: column;
-            gap: 0.3rem;
+        .course-summary,
+        .dates {
+            grid-template-columns: 1fr;
         }
 
-        .facts strong { text-align: left; }
+        .actions {
+            flex-direction: column;
+        }
 
-        .about, .experience, .signup { padding: 5rem 0; }
-        .cards article { padding: 2rem 0; }
+        .expanded {
+            padding: 2rem;
+        }
     }
 </style>
