@@ -1,8 +1,37 @@
 <script lang="ts">
     import GallerySection from '$lib/components/GallerySection.svelte';
+    import PageHero from '$lib/components/layout/PageHero.svelte';
+    import SectionHeading from '$lib/components/layout/SectionHeading.svelte';
+    import Eyebrow from '$lib/components/ui/Eyebrow.svelte';
+    import TextLink from '$lib/components/ui/TextLink.svelte';
     import type { PageData } from './$types';
 
     let { data }: { data: PageData } = $props();
+
+    const education = [
+        {
+            year: '2010',
+            title: 'Bachelor Konzertfach Klavier',
+            description: 'Hochschule für Musik Tōkyō · Klavier-Solistenklasse'
+        },
+        {
+            year: '2014',
+            title: 'Master Konzertfach Klavier',
+            description: 'Anton Bruckner Privatuniversität · Solistenausbildung'
+        },
+        {
+            year: '2017',
+            title: 'Instrumental- und Gesangspädagogik',
+            description:
+                'Schwerpunkte in Gruppenmusizieren, elementarer Musikpädagogik sowie Instrumental- und Vokalbegleitung'
+        },
+        {
+            year: 'Seit 2017',
+            title: 'Elementare Musikpädagogik',
+            description:
+                'Weiterführendes Studium an der Anton Bruckner Privatuniversität'
+        }
+    ];
 </script>
 
 <svelte:head>
@@ -14,38 +43,17 @@
 </svelte:head>
 
 <main class="about-page">
-    <section class="intro">
-        <div class="page-container intro-grid">
-            <div class="intro-copy">
-                <p class="eyebrow">Über mich</p>
-
-                <h1>
-                    Musik begleitet mich
-                    <span>seit meiner Kindheit.</span>
-                </h1>
-
-                <p class="lead">
-                    Ich bin Nanami Shiraki, Pianistin und Klavierpädagogin.
-                    Aufgewachsen in Japan und heute in Österreich tätig,
-                    verbinde ich meine klassische Ausbildung mit großer Freude
-                    an Musikvermittlung und pädagogischer Arbeit.
-                </p>
-            </div>
-
-            <div class="intro-image">
-                <img
-                        src="/images/about.jpg"
-                        alt="Nanami Shiraki"
-                />
-
-                <div class="image-accent"></div>
-            </div>
-        </div>
-    </section>
+    <PageHero
+            eyebrow="Über mich"
+            title="Musik begleitet mich"
+            italicTitle="seit meiner Kindheit."
+            description="Ich bin Nanami Shiraki, Pianistin und Klavierpädagogin. Aufgewachsen in Japan und heute in Österreich tätig, verbinde ich meine klassische Ausbildung mit großer Freude an Musikvermittlung und pädagogischer Arbeit."
+            image={data.heroImage}
+    />
 
     <section class="story">
         <div class="page-container story-grid">
-            <div class="story-label">
+            <div class="number-label">
                 <p>01</p>
                 <span>Mein Weg</span>
             </div>
@@ -77,68 +85,23 @@
 
     <section class="education section-soft">
         <div class="page-container">
-            <div class="section-heading">
-                <p class="eyebrow">Ausbildung</p>
-
-                <h2>
-                    Konzertfach,
-                    <span>Pädagogik & Vermittlung</span>
-                </h2>
-            </div>
+            <SectionHeading
+                    eyebrow="Ausbildung"
+                    title="Konzertfach,"
+                    italicTitle="Pädagogik & Vermittlung"
+            />
 
             <div class="timeline">
-                <article class="timeline-item">
-                    <p class="year">2010</p>
+                {#each education as item}
+                    <article class="timeline-item">
+                        <p class="year">{item.year}</p>
 
-                    <div>
-                        <h3>Bachelor Konzertfach Klavier</h3>
-
-                        <p>
-                            Hochschule für Musik Tōkyō ·
-                            Klavier-Solistenklasse
-                        </p>
-                    </div>
-                </article>
-
-                <article class="timeline-item">
-                    <p class="year">2014</p>
-
-                    <div>
-                        <h3>Master Konzertfach Klavier</h3>
-
-                        <p>
-                            Anton Bruckner Privatuniversität ·
-                            Solistenausbildung
-                        </p>
-                    </div>
-                </article>
-
-                <article class="timeline-item">
-                    <p class="year">2017</p>
-
-                    <div>
-                        <h3>Instrumental- und Gesangspädagogik</h3>
-
-                        <p>
-                            Schwerpunkte in Gruppenmusizieren,
-                            elementarer Musikpädagogik sowie
-                            Instrumental- und Vokalbegleitung
-                        </p>
-                    </div>
-                </article>
-
-                <article class="timeline-item">
-                    <p class="year">Seit 2017</p>
-
-                    <div>
-                        <h3>Elementare Musikpädagogik</h3>
-
-                        <p>
-                            Weiterführendes Studium an der
-                            Anton Bruckner Privatuniversität
-                        </p>
-                    </div>
-                </article>
+                        <div>
+                            <h3>{item.title}</h3>
+                            <p>{item.description}</p>
+                        </div>
+                    </article>
+                {/each}
             </div>
         </div>
     </section>
@@ -146,7 +109,7 @@
     <section class="experience">
         <div class="page-container experience-grid">
             <div class="experience-copy">
-                <p class="eyebrow">Konzert & Erfahrung</p>
+                <Eyebrow>Konzert & Erfahrung</Eyebrow>
 
                 <h2>
                     Auf der Bühne
@@ -185,9 +148,9 @@
         </div>
     </section>
 
-    <section class="teaching section-peach">
+    <section class="teaching">
         <div class="page-container teaching-grid">
-            <div class="teaching-label">
+            <div class="number-label">
                 <p>04</p>
                 <span>Unterrichten</span>
             </div>
@@ -211,10 +174,9 @@
                     Umfeld musikalisch tätig.
                 </p>
 
-                <a href="/teaching" class="text-link">
-                    <span>Mehr über meinen Unterricht</span>
-                    <span>↗</span>
-                </a>
+                <TextLink href="/teaching">
+                    Mehr über meinen Unterricht
+                </TextLink>
             </div>
         </div>
     </section>
@@ -235,92 +197,10 @@
         overflow: hidden;
     }
 
-    .intro {
-        padding:
-                clamp(5rem, 8vw, 8rem)
-                0
-                clamp(6rem, 10vw, 10rem);
-
-        background: var(--color-cream);
-    }
-
-    .intro-grid {
-        display: grid;
-        grid-template-columns:
-			minmax(0, 1.05fr)
-			minmax(320px, 0.95fr);
-
-        align-items: center;
-        gap: clamp(4rem, 8vw, 8rem);
-    }
-
-    .intro-copy {
-        max-width: 760px;
-    }
-
-    .eyebrow {
-        margin-bottom: 1.5rem;
-
-        color: var(--color-sage-300);
-
-        font-size: 0.72rem;
-        font-weight: 500;
-        letter-spacing: 0.2em;
-        text-transform: uppercase;
-    }
-
-    h1 {
-        margin-bottom: 2.5rem;
-
-        color: var(--color-sage-700);
-    }
-
-    h1 span,
-    h2 span {
-        display: block;
-
-        color: var(--color-text);
-        font-style: italic;
-    }
-
-    .lead {
-        max-width: 650px;
-
-        color: var(--color-text-soft);
-
-        font-size: clamp(1.1rem, 1.5vw, 1.35rem);
-        line-height: 1.8;
-    }
-
-    .intro-image {
-        position: relative;
-    }
-
-    .intro-image img {
-        position: relative;
-        z-index: 2;
-
-        width: 100%;
-        aspect-ratio: 4 / 5;
-
-        object-fit: cover;
-    }
-
-    .image-accent {
-        position: absolute;
-        right: -2rem;
-        bottom: -2rem;
-        z-index: 1;
-
-        width: 60%;
-        height: 60%;
-
-        background: var(--color-sage-100);
-    }
-
     .story,
     .experience,
-    .teaching {
+    .teaching,
+    .education {
         padding-block: clamp(6rem, 10vw, 10rem);
     }
 
@@ -328,25 +208,21 @@
     .teaching-grid {
         display: grid;
         grid-template-columns: 160px minmax(0, 1fr);
-
         gap: clamp(3rem, 7vw, 8rem);
     }
 
-    .story-label,
-    .teaching-label {
+    .number-label {
         color: var(--color-cream);
     }
 
-    .story-label p,
-    .teaching-label p {
+    .number-label p {
         margin-bottom: 0.4rem;
 
         font-family: var(--font-serif);
         font-size: 2rem;
     }
 
-    .story-label span,
-    .teaching-label span {
+    .number-label span {
         font-size: 0.7rem;
         letter-spacing: 0.16em;
         text-transform: uppercase;
@@ -365,6 +241,14 @@
         color: var(--color-sage-700);
     }
 
+    .teaching-copy h2 span,
+    .experience-copy h2 span {
+        display: block;
+
+        color: var(--color-text);
+        font-style: italic;
+    }
+
     .story-copy p,
     .teaching-copy p,
     .experience-copy p {
@@ -376,19 +260,6 @@
         line-height: 1.85;
     }
 
-    .education {
-        padding-block: clamp(6rem, 10vw, 10rem);
-    }
-
-    .section-heading {
-        max-width: 750px;
-        margin-bottom: clamp(4rem, 7vw, 7rem);
-    }
-
-    .section-heading h2 {
-        color: var(--color-sage-700);
-    }
-
     .timeline {
         border-top: 1px solid var(--border-soft);
     }
@@ -396,7 +267,6 @@
     .timeline-item {
         display: grid;
         grid-template-columns: 180px 1fr;
-
         gap: 2rem;
 
         padding: 2.2rem 0;
@@ -465,47 +335,9 @@
         background: var(--color-peach);
     }
 
-    .text-link {
-        display: inline-flex;
-        align-items: center;
-        gap: 2rem;
-
-        margin-top: 2.5rem;
-        padding-bottom: 0.5rem;
-
-        border-bottom: 1px solid var(--color-sage-700);
-
-        color: var(--color-sage-700);
-
-        font-size: 0.78rem;
-        font-weight: 500;
-        letter-spacing: 0.07em;
-
-        transition: gap var(--transition-fast);
-    }
-
-    .text-link:hover {
-        gap: 2.5rem;
-    }
-
     @media (max-width: 800px) {
-        .intro {
-            padding-top: 4rem;
-        }
-
-        .intro-grid,
         .experience-grid {
             grid-template-columns: 1fr;
-        }
-
-        .intro-image {
-            width: min(88%, 460px);
-            margin-inline: auto;
-        }
-
-        .image-accent {
-            right: -1rem;
-            bottom: -1rem;
         }
 
         .story-grid,
@@ -514,15 +346,13 @@
             gap: 2.5rem;
         }
 
-        .story-label,
-        .teaching-label {
+        .number-label {
             display: flex;
             align-items: center;
             gap: 1rem;
         }
 
-        .story-label p,
-        .teaching-label p {
+        .number-label p {
             margin: 0;
         }
 
