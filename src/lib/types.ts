@@ -8,10 +8,16 @@ export interface Concert {
 	ticketUrl?: string;
 }
 
-export interface GalleryImage {
+export interface SiteImage {
 	src: string;
+	srcset: string;
+	full: string;
 	alt: string;
+	width: number;
+	height: number;
 }
+
+export type GalleryImage = SiteImage;
 
 export interface HeroVideo {
 	webm: string;
