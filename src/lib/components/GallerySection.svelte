@@ -1,5 +1,6 @@
 <script lang="ts">
     import PhotoGallery from '$lib/components/PhotoGallery.svelte';
+    import Eyebrow from '$lib/components/ui/Eyebrow.svelte';
     import type { GalleryImage } from '$lib/types';
 
     interface Props {
@@ -23,10 +24,18 @@
     <section class="gallery-section">
         <div class="page-container">
             <div class="gallery-heading">
-                <p class="eyebrow">{eyebrow}</p>
-                <h2>{title}<span>{italicTitle}</span></h2>
-                <p class="description">{description}</p>
+                <Eyebrow>{eyebrow}</Eyebrow>
+
+                <h2>
+                    {title}
+                    <span>{italicTitle}</span>
+                </h2>
+
+                <p class="description">
+                    {description}
+                </p>
             </div>
+
             <PhotoGallery {images} />
         </div>
     </section>
@@ -34,45 +43,48 @@
 
 <style>
     .gallery-section {
-        padding: 9rem 0;
+        padding-block: clamp(5.5rem, 9vw, 9rem);
+
         background: var(--color-sage-100);
     }
 
     .gallery-heading {
         max-width: 760px;
-        margin-bottom: 4.5rem;
-    }
 
-    .eyebrow {
-        margin: 0 0 1.4rem;
-        font: 600 0.72rem var(--font-sans);
-        letter-spacing: 0.18em;
-        text-transform: uppercase;
-        color: var(--color-sage-700);
+        margin-bottom: clamp(3rem, 5vw, 4.5rem);
     }
 
     h2 {
         margin: 0;
-        font: 400 clamp(2.8rem, 5vw, 5rem)/0.98 var(--font-serif);
+
         color: var(--color-text);
     }
 
     h2 span {
         display: block;
-        font-style: italic;
+
         color: var(--color-sage-700);
+        font-style: italic;
     }
 
     .description {
         max-width: 520px;
+
         margin: 2rem 0 0;
-        font: 1rem/1.8 var(--font-sans);
+
         color: var(--color-text-soft);
+
+        font-size: 1rem;
+        line-height: 1.8;
     }
 
     @media (max-width: 768px) {
-        .gallery-section { padding: 5.5rem 0; }
-        .gallery-heading { margin-bottom: 3rem; }
-        h2 { font-size: clamp(2.7rem, 12vw, 4rem); }
+        .gallery-section {
+            padding-block: 5.5rem;
+        }
+
+        .gallery-heading {
+            margin-bottom: 3rem;
+        }
     }
 </style>
