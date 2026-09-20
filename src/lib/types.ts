@@ -4,7 +4,7 @@ export interface Concert {
 	time?: string;
 	location?: string;
 	description?: string;
-	image?: string;
+	image?: SiteImage | null;
 	ticketUrl?: string;
 }
 

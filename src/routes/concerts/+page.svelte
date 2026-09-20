@@ -1,6 +1,10 @@
 <script lang="ts">
-    import ConcertCard from '$lib/components/ConcertCard.svelte';
+    import ConcertCard from '$lib/components/concerts/ConcertCard.svelte';
     import GallerySection from '$lib/components/GallerySection.svelte';
+    import PageHero from '$lib/components/layout/PageHero.svelte';
+    import SectionHeading from '$lib/components/layout/SectionHeading.svelte';
+    import Eyebrow from '$lib/components/ui/Eyebrow.svelte';
+    import TextLink from '$lib/components/ui/TextLink.svelte';
     import type { Concert } from '$lib/types';
     import type { PageData } from './$types';
 
@@ -13,8 +17,8 @@
             date: '14. Dezember 2026',
             time: '18:00 Uhr',
             location: 'Wien',
-            description: 'Ein gemeinsamer Konzertabend mit Schülerinnen und Schülern.',
-            image: '/images/concerts/concert-example.jpg',
+            description:
+                'Ein gemeinsamer Konzertabend mit Schülerinnen und Schülern.',
             ticketUrl: 'https://...'
         }
         */
@@ -23,51 +27,30 @@
 
 <svelte:head>
     <title>Konzerte | Nanami Shiraki</title>
+
     <meta
             name="description"
             content="Konzerte, Schülerkonzerte und musikalische Impressionen von Nanami Shiraki in Wien."
     />
 </svelte:head>
 
-<main>
-    <!-- HERO -->
-    <section class="concert-hero">
-        <div class="page-container hero-grid">
-            <div class="hero-content">
-                <p class="eyebrow">Konzerte</p>
+<main class="concerts-page">
+    <PageHero
+            eyebrow="Konzerte"
+            title="Musik gemeinsam"
+            italicTitle="auf die Bühne bringen."
+            description="Regelmäßig entstehen besondere Konzertmomente – von Schülerkonzerten bis zu weiteren musikalischen Projekten."
+            image={data.heroImage}
+    />
 
-                <h1>
-                    Musik gemeinsam
-                    <span>auf die Bühne bringen.</span>
-                </h1>
-
-                <p class="intro">
-                    Regelmäßig entstehen besondere Konzertmomente –
-                    von Schülerkonzerten bis zu weiteren musikalischen Projekten.
-                </p>
-            </div>
-
-            <div class="hero-image">
-                <img
-                        src="/images/concerts.jpg"
-                        alt="Konzert von Nanami Shiraki"
-                />
-            </div>
-        </div>
-    </section>
-
-    <!-- UPCOMING CONCERTS -->
-    <section class="upcoming-section">
+    <section class="upcoming section-soft">
         <div class="page-container">
-            <div class="section-heading">
-                <div>
-                    <p class="eyebrow">Termine</p>
-
-                    <h2>
-                        Kommende
-                        <span>Konzerte</span>
-                    </h2>
-                </div>
+            <div class="heading-grid">
+                <SectionHeading
+                        eyebrow="Termine"
+                        title="Kommende"
+                        italicTitle="Konzerte"
+                />
 
                 <p class="section-description">
                     Hier findest du aktuelle Konzerttermine und
@@ -75,7 +58,7 @@
                 </p>
             </div>
 
-            {#if upcomingConcerts.length > 0}
+            {#if upcomingConcerts.length}
                 <div class="concert-list">
                     {#each upcomingConcerts as concert}
                         <ConcertCard {...concert} />
@@ -83,18 +66,22 @@
                 </div>
             {:else}
                 <div class="empty-state">
-                    <div class="empty-symbol" aria-hidden="true">♪</div>
+                    <div class="empty-symbol" aria-hidden="true">
+                        ♪
+                    </div>
 
                     <div class="empty-content">
-                        <p class="empty-label">Momentan keine Termine</p>
+                        <p class="empty-label">
+                            Momentan keine Termine
+                        </p>
 
                         <h3>
                             Neue Konzerte sind bereits in Planung.
                         </h3>
 
                         <p>
-                            Sobald ein neuer Termin feststeht, findest du
-                            hier alle Informationen dazu.
+                            Sobald ein neuer Termin feststeht,
+                            findest du hier alle Informationen dazu.
                         </p>
                     </div>
                 </div>
@@ -102,11 +89,10 @@
         </div>
     </section>
 
-    <!-- STUDENT CONCERTS -->
-    <section class="student-section">
+    <section class="student-concerts">
         <div class="page-container student-grid">
-            <div class="student-title">
-                <p class="eyebrow">Schülerkonzerte</p>
+            <div class="student-heading">
+                <Eyebrow>Schülerkonzerte</Eyebrow>
 
                 <h2>
                     Gemeinsam
@@ -117,29 +103,30 @@
             <div class="student-content">
                 <p class="lead">
                     Ein wichtiger Teil meines Unterrichts ist es,
-                    Musik nicht nur im Unterrichtsraum, sondern auch
-                    auf der Bühne erleben zu können.
+                    Musik nicht nur im Unterrichtsraum, sondern
+                    auch auf der Bühne erleben zu können.
                 </p>
 
                 <p>
-                    Deshalb organisiere ich regelmäßig Schülerkonzerte,
-                    bei denen meine Schülerinnen und Schüler die Möglichkeit
-                    haben, ihre Musik mit Familie, Freunden und anderen
+                    Deshalb organisiere ich regelmäßig
+                    Schülerkonzerte, bei denen meine Schülerinnen
+                    und Schüler die Möglichkeit haben, ihre Musik
+                    mit Familie, Freunden und anderen
                     Musikbegeisterten zu teilen.
                 </p>
 
                 <p>
-                    Wenn genügend Teilnehmerinnen und Teilnehmer zusammenkommen,
-                    findet das Konzert in einem angemieteten Konzertsaal statt.
-                    Dabei steht nicht Perfektion im Vordergrund, sondern die
-                    Freude daran, gemeinsam Musik zu machen und Bühnenerfahrung
-                    zu sammeln.
+                    Wenn genügend Teilnehmerinnen und Teilnehmer
+                    zusammenkommen, findet das Konzert in einem
+                    angemieteten Konzertsaal statt. Dabei steht
+                    nicht Perfektion im Vordergrund, sondern die
+                    Freude daran, gemeinsam Musik zu machen und
+                    Bühnenerfahrung zu sammeln.
                 </p>
 
-                <a href="/teaching" class="text-link">
-                    <span>Mehr über den Unterricht erfahren</span>
-                    <span aria-hidden="true">↗</span>
-                </a>
+                <TextLink href="/teaching">
+                    Mehr über den Unterricht erfahren
+                </TextLink>
             </div>
         </div>
     </section>
@@ -153,131 +140,41 @@
                 description="Einblicke in Konzerte, Auftritte und gemeinsame musikalische Erlebnisse."
         />
     {/if}
-
 </main>
 
 <style>
-    /* ================================
-       SHARED
-    ================================ */
-
-    .eyebrow {
-        margin: 0 0 1.4rem;
-        font-family: var(--font-sans);
-        font-size: 0.72rem;
-        font-weight: 600;
-        letter-spacing: 0.18em;
-        text-transform: uppercase;
-        color: var(--color-sage-700);
-    }
-
-    h1,
-    h2 {
-        margin: 0;
-        font-family: var(--font-serif);
-        font-weight: 400;
-        line-height: 0.98;
-        color: var(--color-text);
-    }
-
-    h1 span,
-    h2 span {
-        display: block;
-        font-style: italic;
-        color: var(--color-sage-700);
-    }
-
-
-    /* ================================
-       HERO
-    ================================ */
-
-    .concert-hero {
-        padding:
-                calc(var(--navbar-height) + 5rem)
-                0
-                7rem;
-        background: var(--color-cream);
-    }
-
-    .hero-grid {
-        display: grid;
-        grid-template-columns:
-			minmax(0, 0.9fr)
-			minmax(380px, 1.1fr);
-        gap: clamp(3rem, 7vw, 7rem);
-        align-items: center;
-    }
-
-    .hero-content {
-        padding: 3rem 0;
-    }
-
-    h1 {
-        max-width: 680px;
-        font-size: clamp(3.5rem, 5.8vw, 6.4rem);
-    }
-
-    .intro {
-        max-width: 510px;
-        margin: 2.5rem 0 0;
-        font-family: var(--font-sans);
-        font-size: 1.05rem;
-        line-height: 1.8;
-        color: var(--color-text-soft);
-    }
-
-    .hero-image {
-        position: relative;
-        height: min(68vh, 700px);
-        min-height: 520px;
+    .concerts-page {
         overflow: hidden;
-        background: var(--color-sage-100);
     }
 
-    .hero-image img {
-        width: 100%;
-        height: 100%;
-        display: block;
-        object-fit: cover;
-        object-position: center;
-        transition: transform 1.4s ease;
+    .upcoming,
+    .student-concerts {
+        padding-block: clamp(6rem, 10vw, 10rem);
     }
 
-    .hero-image:hover img {
-        transform: scale(1.02);
-    }
-
-
-    /* ================================
-       UPCOMING CONCERTS
-    ================================ */
-
-    .upcoming-section {
-        padding: 8rem 0;
-        background: var(--color-sage-100);
-    }
-
-    .section-heading {
+    .heading-grid {
         display: grid;
         grid-template-columns: 1.2fr 0.8fr;
-        gap: 5rem;
+
         align-items: end;
-        margin-bottom: 4rem;
+        gap: clamp(3rem, 7vw, 6rem);
+
+        margin-bottom: clamp(4rem, 7vw, 7rem);
     }
 
-    .section-heading h2,
-    .student-title h2 {
-        font-size: clamp(2.8rem, 5vw, 5rem);
+    .heading-grid :global(header) {
+        margin-bottom: 0;
     }
 
     .section-description {
         max-width: 430px;
+
         margin: 0 0 0.4rem;
-        font-family: var(--font-sans);
+
+        color: var(--color-text-soft);
+
         font-size: 1rem;
         line-height: 1.8;
-        color: var(--color-text-soft);
     }
 
     .concert-list {
@@ -289,72 +186,90 @@
     .empty-state {
         display: grid;
         grid-template-columns: auto 1fr;
-        gap: 2rem;
+
         align-items: center;
+        gap: 2rem;
+
         padding: 3rem;
+
         border: 1px solid var(--border-soft);
+
         background: var(--color-cream);
     }
 
     .empty-symbol {
         display: grid;
         place-items: center;
+
         width: 76px;
         height: 76px;
-        flex-shrink: 0;
+
         border: 1px solid var(--color-sage-300);
         border-radius: 50%;
+
+        color: var(--color-sage-700);
+
         font-family: var(--font-serif);
         font-size: 2rem;
-        color: var(--color-sage-700);
     }
 
     .empty-label {
         margin: 0 0 0.5rem;
-        font-family: var(--font-sans);
+
+        color: var(--color-sage-700);
+
         font-size: 0.68rem;
         font-weight: 600;
         letter-spacing: 0.14em;
         text-transform: uppercase;
-        color: var(--color-sage-700);
     }
 
     .empty-state h3 {
         margin: 0 0 0.75rem;
-        font-family: var(--font-serif);
-        font-size: clamp(1.5rem, 2vw, 2rem);
-        font-weight: 400;
+
         color: var(--color-text);
+
+        font-size: clamp(1.5rem, 2vw, 2rem);
     }
 
     .empty-content > p:last-child {
         max-width: 520px;
+
         margin: 0;
-        font-family: var(--font-sans);
-        line-height: 1.7;
+
         color: var(--color-text-soft);
+
+        line-height: 1.7;
     }
 
-
-    /* ================================
-       STUDENT CONCERTS
-    ================================ */
-
-    .student-section {
-        padding: 9rem 0;
+    .student-concerts {
         background: var(--color-cream);
     }
 
     .student-grid {
         display: grid;
         grid-template-columns: 0.9fr 1.1fr;
-        gap: clamp(4rem, 10vw, 10rem);
+
         align-items: start;
+        gap: clamp(4rem, 10vw, 10rem);
     }
 
-    .student-title {
+    .student-heading {
         position: sticky;
         top: calc(var(--navbar-height) + 3rem);
+    }
+
+    .student-heading h2 {
+        margin: 0;
+
+        color: var(--color-sage-700);
+    }
+
+    .student-heading h2 span {
+        display: block;
+
+        color: var(--color-text);
+        font-style: italic;
     }
 
     .student-content {
@@ -363,138 +278,57 @@
 
     .student-content p {
         margin: 0 0 1.5rem;
-        font-family: var(--font-sans);
+
+        color: var(--color-text-soft);
+
         font-size: 1rem;
         line-height: 1.85;
-        color: var(--color-text-soft);
     }
 
     .student-content .lead {
+        color: var(--color-text);
+
         font-family: var(--font-serif);
         font-size: clamp(1.45rem, 2.2vw, 2rem);
         line-height: 1.45;
-        color: var(--color-text);
     }
-
-    .text-link {
-        display: inline-flex;
-        align-items: center;
-        gap: 1rem;
-        margin-top: 1.5rem;
-        padding-bottom: 0.4rem;
-        border-bottom: 1px solid var(--color-sage-700);
-        font-family: var(--font-sans);
-        font-size: 0.82rem;
-        font-weight: 600;
-        letter-spacing: 0.06em;
-        text-decoration: none;
-        color: var(--color-sage-700);
-        transition:
-                gap var(--transition-fast),
-                opacity var(--transition-fast);
-    }
-
-    .text-link:hover {
-        gap: 1.35rem;
-        opacity: 0.7;
-    }
-
-
-
-
-
-    /* ================================
-       TABLET
-    ================================ */
 
     @media (max-width: 950px) {
-        .hero-grid {
-            grid-template-columns: 1fr 1fr;
-            gap: 3rem;
-        }
-
-        h1 {
-            font-size: clamp(3rem, 7vw, 5rem);
-        }
-
-        .hero-image {
-            min-height: 480px;
-        }
-
-        .section-heading {
+        .heading-grid,
+        .student-grid {
             grid-template-columns: 1fr;
+        }
+
+        .heading-grid {
             gap: 2rem;
         }
 
         .student-grid {
-            grid-template-columns: 1fr;
             gap: 3.5rem;
         }
 
-        .student-title {
+        .student-heading {
             position: static;
         }
     }
 
-
-    /* ================================
-       MOBILE
-    ================================ */
-
     @media (max-width: 768px) {
-        .concert-hero {
-            padding: 6.5rem 0 4rem;
-        }
-
-        .hero-grid {
-            grid-template-columns: 1fr;
-            gap: 3rem;
-        }
-
-        .hero-content {
-            padding: 0;
-        }
-
-        h1 {
-            font-size: clamp(3rem, 14vw, 4.6rem);
-        }
-
-        .intro {
-            margin-top: 2rem;
-            font-size: 1rem;
-        }
-
-        .hero-image {
-            width: 100%;
-            height: 62vh;
-            min-height: 400px;
-            max-height: 560px;
-        }
-
-        .upcoming-section,
-        .student-section {
-            padding: 5.5rem 0;
-        }
-
-        .section-heading {
-            margin-bottom: 3rem;
-        }
-
-        .section-heading h2,
-        .student-title h2 {
-            font-size: clamp(2.7rem, 12vw, 4rem);
+        .upcoming,
+        .student-concerts {
+            padding-block: 5.5rem;
         }
 
         .empty-state {
             grid-template-columns: 1fr;
+
             padding: 2rem;
         }
 
         .empty-symbol {
             width: 60px;
             height: 60px;
+
             font-size: 1.6rem;
         }
-
     }
 </style>

@@ -76,9 +76,13 @@
                     {/each}
                 </div>
 
-                <a href="/contact" class="card-action subtle">
-                    <span>Jahresvertrag anfragen</span>
-                    <span>↗</span>
+                <a href="/contact" class="card-action contact-action">
+                    <div>
+                        <strong>Jahresvertrag anfragen</strong>
+                        <span>Weiter zum Kontakt</span>
+                    </div>
+
+                    <span aria-hidden="true">↗</span>
                 </a>
             </article>
 
@@ -307,26 +311,45 @@
     }
 
     .card-action {
-        display: inline-flex;
+        display: flex;
         align-items: center;
         justify-content: space-between;
-        gap: 1rem;
+        gap: 1.5rem;
+
+        width: 100%;
 
         margin-top: auto;
-        padding-top: 2.5rem;
+        padding: 1rem 1.2rem;
 
-        color: var(--color-sage-700);
+        background: var(--color-sage-700);
+        color: var(--color-cream);
 
-        font-size: 0.72rem;
-        letter-spacing: 0.06em;
-    }
-
-    .card-action.subtle {
-        opacity: 0.72;
+        transition:
+                transform var(--transition-fast),
+                background var(--transition-fast);
     }
 
     .card-action:hover {
-        opacity: 1;
+        transform: translateY(-2px);
+    }
+
+    .card-action > div {
+        display: flex;
+        flex-direction: column;
+        gap: 0.2rem;
+    }
+
+    .card-action strong {
+        font-size: 0.78rem;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+    }
+
+    .card-action div span {
+        color: var(--color-sage-100);
+
+        font-size: 0.62rem;
+        letter-spacing: 0.05em;
     }
 
     .booking-options {
@@ -335,7 +358,7 @@
     }
 
     .booking-options > p {
-        margin-bottom: 0.8rem;
+        margin-bottom: 1rem;
 
         color: var(--color-text-soft);
 
@@ -351,20 +374,23 @@
 
         width: 100%;
 
-        padding: 0.85rem 0;
+        margin-top: 0.65rem;
+        padding: 0.9rem 1rem;
 
-        border-bottom: 1px solid var(--border-soft);
-
-        color: var(--color-sage-700);
+        background: var(--color-sage-700);
+        color: var(--color-cream);
 
         font-size: 0.78rem;
+        font-weight: 500;
         letter-spacing: 0.05em;
 
-        transition: padding var(--transition-fast);
+        transition:
+                transform var(--transition-fast),
+                background var(--transition-fast);
     }
 
     :global(.duration-booking:hover) {
-        padding-left: 0.35rem;
+        transform: translateY(-2px);
     }
 
     .single-options {

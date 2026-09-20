@@ -1,5 +1,16 @@
 <script lang="ts">
-    import type { Concert } from '$lib/types';
+    import ResponsiveImage from '$lib/components/media/ResponsiveImage.svelte';
+    import type { SiteImage } from '$lib/types';
+
+    interface Props {
+        title: string;
+        date: string;
+        time?: string;
+        location?: string;
+        description?: string;
+        image?: SiteImage | null;
+        ticketUrl?: string;
+    }
 
     let {
         title,
@@ -9,19 +20,23 @@
         description,
         image,
         ticketUrl
-    }: Concert = $props();
+    }: Props = $props();
 </script>
 
 <article class="concert-card">
     {#if image}
         <div class="concert-image">
-            <img src={image} alt={title} />
+            <ResponsiveImage
+                    {image}
+                    sizes="(max-width: 800px) 100vw, 50vw"
+                    fallback="/fallbacks/landscape.webp"
+            />
         </div>
     {/if}
 
     <div class="concert-content">
         <div class="concert-meta">
-            <p class="date">{date}</p>
+            <p>{date}</p>
 
             {#if time}
                 <p>{time}</p>
@@ -45,8 +60,8 @@
                     target="_blank"
                     rel="noreferrer"
             >
-                <span>Tickets bei Öticket</span>
-                <span>↗</span>
+                <span>Tickets</span>
+                <span aria-hidden="true">↗</span>
             </a>
         {/if}
     </div>
@@ -69,7 +84,7 @@
         overflow: hidden;
     }
 
-    .concert-image img {
+    .concert-image :global(img) {
         width: 100%;
         height: 100%;
         min-height: 420px;
@@ -79,7 +94,7 @@
         transition: transform 800ms ease;
     }
 
-    .concert-card:hover .concert-image img {
+    .concert-card:hover .concert-image :global(img) {
         transform: scale(1.03);
     }
 
@@ -102,6 +117,10 @@
         font-size: 0.68rem;
         letter-spacing: 0.13em;
         text-transform: uppercase;
+    }
+
+    .concert-meta p {
+        margin: 0;
     }
 
     h3 {
@@ -155,7 +174,7 @@
             grid-template-columns: 1fr;
         }
 
-        .concert-image img {
+        .concert-image :global(img) {
             min-height: 300px;
             aspect-ratio: 4 / 3;
         }
