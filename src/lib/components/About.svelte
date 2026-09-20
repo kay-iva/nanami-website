@@ -1,16 +1,37 @@
+<script lang="ts">
+    import ResponsiveImage from '$lib/components/media/ResponsiveImage.svelte';
+    import Eyebrow from '$lib/components/ui/Eyebrow.svelte';
+    import TextLink from '$lib/components/ui/TextLink.svelte';
+    import type { SiteImage } from '$lib/types';
+
+    interface Props {
+        image?: SiteImage | null;
+    }
+
+    let { image = null }: Props = $props();
+</script>
+
 <section class="about section">
     <div class="page-container about-inner">
         <div class="about-image">
-            <img
-                    src="/images/about.jpg"
-                    alt="Nanami Shiraki"
-            />
+            {#if image}
+                <ResponsiveImage
+                        {image}
+                        sizes="(max-width: 800px) 85vw, 45vw"
+                        fallback="/fallbacks/portrait.webp"
+                />
+            {:else}
+                <img
+                        src="/fallbacks/portrait.webp"
+                        alt="Nanami Shiraki"
+                />
+            {/if}
 
-            <div class="image-accent"></div>
+            <div class="image-accent" aria-hidden="true"></div>
         </div>
 
         <div class="about-content">
-            <p class="eyebrow">Über mich</p>
+            <Eyebrow>Über mich</Eyebrow>
 
             <h2>
                 Von Japan
@@ -19,27 +40,31 @@
 
             <div class="about-copy">
                 <p>
-                    Ich bin Nanami Shiraki, Pianistin und Klavierpädagogin. Geboren und
-                    aufgewachsen in Japan, begleitet mich das Klavier bereits seit meinem
-                    dritten Lebensjahr. Nach meinem Konzertfachstudium an der Hochschule
-                    für Musik Tōkyō führte mich mein musikalischer Weg nach Österreich,
-                    wo ich mein Masterstudium im Konzertfach Klavier an der Anton Bruckner
+                    Ich bin Nanami Shiraki, Pianistin und
+                    Klavierpädagogin. Geboren und aufgewachsen
+                    in Japan, begleitet mich das Klavier bereits
+                    seit meinem dritten Lebensjahr. Nach meinem
+                    Konzertfachstudium an der Hochschule für Musik
+                    Tōkyō führte mich mein musikalischer Weg nach
+                    Österreich, wo ich mein Masterstudium im
+                    Konzertfach Klavier an der Anton Bruckner
                     Privatuniversität absolvierte.
                 </p>
 
                 <p>
-                    Neben meiner Tätigkeit als Pianistin liegt mir besonders die
-                    Musikpädagogik am Herzen. Seit vielen Jahren begleite ich Kinder und
-                    Erwachsene auf ihrem eigenen musikalischen Weg und möchte dabei vor
-                    allem eines vermitteln: die Freude daran, Musik zu entdecken, zu
-                    verstehen und selbst zu gestalten.
+                    Neben meiner Tätigkeit als Pianistin liegt mir
+                    besonders die Musikpädagogik am Herzen. Seit
+                    vielen Jahren begleite ich Kinder und Erwachsene
+                    auf ihrem eigenen musikalischen Weg und möchte
+                    dabei vor allem eines vermitteln: die Freude
+                    daran, Musik zu entdecken, zu verstehen und
+                    selbst zu gestalten.
                 </p>
             </div>
 
-            <a class="about-link" href="/about">
-                <span>Mehr über mich</span>
-                <span class="arrow">↗</span>
-            </a>
+            <TextLink href="/about">
+                Mehr über mich
+            </TextLink>
         </div>
     </div>
 </section>
@@ -71,24 +96,21 @@
         margin-inline: auto;
     }
 
-    .about-image img {
+    .about-image :global(img) {
         position: relative;
         z-index: 2;
 
         width: 100%;
-        aspect-ratio: 4 / 5;
-
-        object-fit: cover;
+        height: auto;
 
         border-radius: 2px;
     }
 
     .image-accent {
         position: absolute;
-        z-index: 1;
-
         right: -2rem;
         bottom: -2rem;
+        z-index: 1;
 
         width: 65%;
         height: 65%;
@@ -98,17 +120,6 @@
 
     .about-content {
         max-width: 650px;
-    }
-
-    .eyebrow {
-        margin-bottom: 1.5rem;
-
-        color: var(--color-sage-300);
-
-        font-size: 0.72rem;
-        font-weight: 500;
-        letter-spacing: 0.2em;
-        text-transform: uppercase;
     }
 
     h2 {
@@ -137,36 +148,6 @@
 
     .about-copy p:last-child {
         margin-bottom: 0;
-    }
-
-    .about-link {
-        display: inline-flex;
-        align-items: center;
-        gap: 2rem;
-
-        margin-top: 2.5rem;
-        padding-bottom: 0.5rem;
-
-        border-bottom: 1px solid var(--color-sage-300);
-
-        color: var(--color-sage-700);
-
-        font-size: 0.78rem;
-        font-weight: 500;
-        letter-spacing: 0.08em;
-
-        transition:
-                gap var(--transition-fast),
-                color var(--transition-fast);
-    }
-
-    .about-link:hover {
-        gap: 2.5rem;
-        color: var(--color-text);
-    }
-
-    .arrow {
-        font-size: 1rem;
     }
 
     @media (max-width: 800px) {

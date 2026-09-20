@@ -1,7 +1,22 @@
+<script lang="ts">
+    import BookingButton from '$lib/components/booking/BookingButton.svelte';
+    import ResponsiveImage from '$lib/components/media/ResponsiveImage.svelte';
+    import Eyebrow from '$lib/components/ui/Eyebrow.svelte';
+    import TextLink from '$lib/components/ui/TextLink.svelte';
+    import { booking } from '$lib/config/booking';
+    import type { SiteImage } from '$lib/types';
+
+    interface Props {
+        image?: SiteImage | null;
+    }
+
+    let { image = null }: Props = $props();
+</script>
+
 <section class="teaching section">
     <div class="page-container teaching-inner">
         <div class="teaching-content">
-            <p class="eyebrow">Klavierunterricht</p>
+            <Eyebrow>Klavierunterricht</Eyebrow>
 
             <h2>
                 Musik entdecken.
@@ -16,10 +31,11 @@
                 </p>
 
                 <p>
-                    Dabei steht für mich nicht nur das Erlernen von Technik
-                    im Mittelpunkt. Der Unterricht soll Raum geben, Musik
-                    mit Neugier zu entdecken, eigene Fortschritte zu erleben
-                    und langfristig Freude am Musizieren zu entwickeln.
+                    Dabei steht für mich nicht nur das Erlernen von
+                    Technik im Mittelpunkt. Der Unterricht soll Raum
+                    geben, Musik mit Neugier zu entdecken, eigene
+                    Fortschritte zu erleben und langfristig Freude
+                    am Musizieren zu entwickeln.
                 </p>
             </div>
 
@@ -44,26 +60,40 @@
 
                 <div>
                     <span class="number">03</span>
-
-                    <p>
-                        Wien
-                    </p>
+                    <p>Wien</p>
                 </div>
             </div>
 
-            <a class="teaching-link" href="/teaching">
-                <span>Mehr zum Unterricht</span>
-                <span class="arrow">↗</span>
-            </a>
+            <div class="teaching-actions">
+                <BookingButton
+                        booking={booking.trial}
+                        class="trial-action"
+                >
+                    <span>Kostenlose Probestunde</span>
+                    <span aria-hidden="true">↗</span>
+                </BookingButton>
+
+                <TextLink href="/teaching">
+                    Mehr zum Unterricht
+                </TextLink>
+            </div>
         </div>
 
         <div class="teaching-image">
-            <div class="image-accent"></div>
+            <div class="image-accent" aria-hidden="true"></div>
 
-            <img
-                    src="/images/teaching.jpg"
-                    alt="Klavierunterricht bei Nanami Shiraki"
-            />
+            {#if image}
+                <ResponsiveImage
+                        {image}
+                        sizes="(max-width: 800px) 85vw, 45vw"
+                        fallback="/fallbacks/portrait.webp"
+                />
+            {:else}
+                <img
+                        src="/fallbacks/portrait.webp"
+                        alt="Klavierunterricht bei Nanami Shiraki"
+                />
+            {/if}
 
             <div class="image-note">
                 <span>30 min</span>
@@ -76,7 +106,6 @@
 <style>
     .teaching {
         position: relative;
-
         overflow: hidden;
 
         background: var(--color-sage-100);
@@ -89,28 +118,11 @@
 			minmax(0, 0.9fr);
 
         align-items: center;
-
         gap: clamp(4rem, 8vw, 9rem);
     }
 
-
-    /* --------------------------------
-       Content
-    -------------------------------- */
-
     .teaching-content {
         max-width: 680px;
-    }
-
-    .eyebrow {
-        margin-bottom: 1.5rem;
-
-        color: var(--color-sage-300);
-
-        font-size: 0.72rem;
-        font-weight: 500;
-        letter-spacing: 0.2em;
-        text-transform: uppercase;
     }
 
     h2 {
@@ -125,7 +137,6 @@
         margin-left: clamp(1rem, 4vw, 4rem);
 
         color: var(--color-text);
-
         font-style: italic;
     }
 
@@ -141,11 +152,6 @@
     .teaching-copy p:last-child {
         margin-bottom: 0;
     }
-
-
-    /* --------------------------------
-       Little info row
-    -------------------------------- */
 
     .teaching-details {
         display: grid;
@@ -194,47 +200,43 @@
         line-height: 1.35;
     }
 
-
-    /* --------------------------------
-       Link
-    -------------------------------- */
-
-    .teaching-link {
-        display: inline-flex;
-        align-items: center;
-
-        gap: 2rem;
+    .teaching-actions {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: flex-end;
+        gap: 1rem 2rem;
 
         margin-top: 2.5rem;
-        padding-bottom: 0.5rem;
+    }
 
-        border-bottom: 1px solid var(--color-sage-300);
+    .teaching-actions :global(a) {
+        margin-top: 0;
+    }
 
-        color: var(--color-sage-700);
+    :global(.trial-action) {
+        display: inline-flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 2rem;
 
-        font-size: 0.78rem;
+        padding: 0.9rem 1.1rem;
+
+        background: var(--color-sage-700);
+        color: var(--color-cream);
+
+        font-size: 0.75rem;
         font-weight: 500;
-        letter-spacing: 0.08em;
+        letter-spacing: 0.06em;
 
         transition:
-                gap var(--transition-fast),
-                color var(--transition-fast);
+                transform var(--transition-fast),
+                gap var(--transition-fast);
     }
 
-    .teaching-link:hover {
-        gap: 2.5rem;
-
-        color: var(--color-text);
+    :global(.trial-action:hover) {
+        gap: 2.4rem;
+        transform: translateY(-2px);
     }
-
-    .arrow {
-        font-size: 1rem;
-    }
-
-
-    /* --------------------------------
-       Image
-    -------------------------------- */
 
     .teaching-image {
         position: relative;
@@ -245,33 +247,25 @@
         margin-inline: auto;
     }
 
-    .teaching-image img {
+    .teaching-image :global(img) {
         position: relative;
         z-index: 2;
 
         width: 100%;
-        aspect-ratio: 4 / 5;
-
-        object-fit: cover;
+        height: auto;
     }
 
     .image-accent {
         position: absolute;
-        z-index: 1;
-
         left: -2rem;
         bottom: -2rem;
+        z-index: 1;
 
         width: 65%;
         height: 65%;
 
         background: var(--color-peach);
     }
-
-
-    /* --------------------------------
-       Floating trial card
-    -------------------------------- */
 
     .image-note {
         position: absolute;
@@ -311,15 +305,9 @@
         text-transform: uppercase;
     }
 
-
-    /* --------------------------------
-       Mobile
-    -------------------------------- */
-
     @media (max-width: 800px) {
         .teaching-inner {
             grid-template-columns: 1fr;
-
             gap: 4rem;
         }
 
@@ -345,27 +333,18 @@
         }
 
         .image-note {
-            right: -1.5rem;
-            bottom: 2rem;
-
-            width: 150px;
-
-            padding: 1.2rem;
-        }
-
-        .image-note span {
-            font-size: 1.45rem;
+            right: -1rem;
         }
     }
 
-    @media (max-width: 500px) {
+    @media (max-width: 520px) {
         .teaching-details {
             grid-template-columns: 1fr;
         }
 
         .teaching-details > div,
         .teaching-details > div:not(:first-child) {
-            padding: 1rem 0;
+            padding: 1.2rem 0;
 
             border-right: 0;
             border-bottom: 1px solid var(--border-soft);
@@ -375,14 +354,16 @@
             border-bottom: 0;
         }
 
-        .teaching-image {
-            width: calc(100% - 1.5rem);
-
-            margin-left: 0;
+        .teaching-actions {
+            flex-direction: column;
+            align-items: flex-start;
         }
 
         .image-note {
-            right: -1.5rem;
+            right: -0.5rem;
+            bottom: 1.5rem;
+
+            width: 145px;
         }
     }
 </style>

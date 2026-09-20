@@ -9,9 +9,9 @@
     import type { PageData } from './$types';
 
     let { data }: { data: PageData } = $props();
-
+//TODO: deal with concerts
     const upcomingConcerts: Concert[] = [
-        /*
+
         {
             title: 'Klavierabend',
             date: '14. Dezember 2026',
@@ -21,7 +21,7 @@
                 'Ein gemeinsamer Konzertabend mit Schülerinnen und Schülern.',
             ticketUrl: 'https://...'
         }
-        */
+
     ];
 </script>
 

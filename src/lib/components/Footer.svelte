@@ -1,4 +1,6 @@
 <script lang="ts">
+    import Eyebrow from '$lib/components/ui/Eyebrow.svelte';
+
     const navigation = [
         { label: 'Home', href: '/' },
         { label: 'Über mich', href: '/about' },
@@ -19,45 +21,28 @@
 
 <footer class="footer">
     <div class="footer-main page-container">
-
-        <!-- BIG CTA -->
-
         <div class="footer-intro">
-            <p class="eyebrow">Lust auf Musik?</p>
+            <Eyebrow>Lust auf Musik?</Eyebrow>
 
             <a class="footer-cta" href="/contact">
-                <span class="cta-line">Lass uns gemeinsam</span>
+				<span class="cta-line">
+					Lass uns gemeinsam
+				</span>
 
                 <span class="cta-line italic">
 					Musik machen.
-					<span class="arrow">↗</span>
+					<span class="arrow" aria-hidden="true">↗</span>
 				</span>
             </a>
         </div>
 
-
-        <!-- DIVIDER -->
-
         <div class="music-divider" aria-hidden="true">
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
+            {#each Array(12) as _}
+                <span></span>
+            {/each}
         </div>
 
-
-        <!-- INFO -->
-
         <div class="footer-grid">
-
             <div class="footer-identity">
                 <p class="name">
                     Nanami
@@ -74,8 +59,10 @@
                 </p>
             </div>
 
-
-            <nav class="footer-nav" aria-label="Footer Navigation">
+            <nav
+                    class="footer-nav"
+                    aria-label="Footer Navigation"
+            >
                 <p class="footer-label">Navigation</p>
 
                 {#each navigation as item, index}
@@ -89,26 +76,30 @@
                 {/each}
             </nav>
 
-
             <div class="footer-socials">
-                <p class="footer-label">Follow along</p>
+                <p class="footer-label">
+                    Follow along
+                </p>
 
                 {#each socials as social}
                     <a
                             href={social.href}
-                            target="_blank"
-                            rel="noreferrer"
+                            aria-label={social.href === '#'
+							? `${social.label} – Link folgt`
+							: social.label}
                     >
                         <span>{social.label}</span>
-                        <span class="social-arrow">↗</span>
+
+                        <span
+                                class="social-arrow"
+                                aria-hidden="true"
+                        >
+							↗
+						</span>
                     </a>
                 {/each}
             </div>
-
         </div>
-
-
-        <!-- BOTTOM -->
 
         <div class="footer-bottom">
             <p>© {currentYear} Nanami Shiraki</p>
@@ -118,22 +109,24 @@
                 <a href="/datenschutz">Datenschutz</a>
             </div>
 
-            <a class="back-top" href="#top" aria-label="Zurück nach oben">
+            <a
+                    class="back-top"
+                    href="#top"
+                    aria-label="Zurück nach oben"
+            >
                 <span>Nach oben</span>
-                <span>↑</span>
+                <span aria-hidden="true">↑</span>
             </a>
         </div>
-
     </div>
 
-
-    <!-- GIANT SIGNATURE -->
-
-    <div class="footer-signature" aria-hidden="true">
+    <div
+            class="footer-signature"
+            aria-hidden="true"
+    >
         Nanami Shiraki
     </div>
 </footer>
-
 
 <style>
     .footer {
@@ -153,26 +146,16 @@
         padding-bottom: 2rem;
     }
 
-
-    /* --------------------------------
-       CTA
-    -------------------------------- */
-
     .footer-intro {
         max-width: 1100px;
 
         margin-bottom: clamp(5rem, 9vw, 9rem);
     }
 
-    .eyebrow {
+    .footer-intro :global(p) {
         margin-bottom: 2rem;
 
         color: var(--color-sage-300);
-
-        font-size: 0.68rem;
-        font-weight: 500;
-        letter-spacing: 0.2em;
-        text-transform: uppercase;
     }
 
     .footer-cta {
@@ -187,14 +170,15 @@
         font-family: var(--font-serif);
         font-size: clamp(3rem, 7vw, 7rem);
         font-weight: 400;
-        line-height: 0.98;
         letter-spacing: -0.035em;
+        line-height: 0.98;
     }
 
     .cta-line.italic {
         margin-left: clamp(1rem, 7vw, 7rem);
 
         color: var(--color-sage-100);
+
         font-style: italic;
     }
 
@@ -207,18 +191,12 @@
         font-size: 0.45em;
         font-style: normal;
 
-        transition:
-                transform var(--transition-normal);
+        transition: transform var(--transition-normal);
     }
 
     .footer-cta:hover .arrow {
         transform: translate(0.3rem, -0.3rem);
     }
-
-
-    /* --------------------------------
-       Piano-ish divider
-    -------------------------------- */
 
     .music-divider {
         display: grid;
@@ -228,15 +206,12 @@
 
         margin-bottom: clamp(4rem, 7vw, 7rem);
 
-        border-top:
-                1px solid rgba(247, 244, 237, 0.2);
-        border-bottom:
-                1px solid rgba(247, 244, 237, 0.2);
+        border-top: 1px solid rgba(247, 244, 237, 0.2);
+        border-bottom: 1px solid rgba(247, 244, 237, 0.2);
     }
 
     .music-divider span {
-        border-right:
-                1px solid rgba(247, 244, 237, 0.15);
+        border-right: 1px solid rgba(247, 244, 237, 0.15);
     }
 
     .music-divider span:last-child {
@@ -248,14 +223,8 @@
     .music-divider span:nth-child(7),
     .music-divider span:nth-child(9),
     .music-divider span:nth-child(11) {
-        background:
-                rgba(247, 244, 237, 0.08);
+        background: rgba(247, 244, 237, 0.08);
     }
-
-
-    /* --------------------------------
-       Main grid
-    -------------------------------- */
 
     .footer-grid {
         display: grid;
@@ -283,6 +252,7 @@
         margin-left: 1.5rem;
 
         color: var(--color-sage-100);
+
         font-style: italic;
     }
 
@@ -316,11 +286,6 @@
         text-transform: uppercase;
     }
 
-
-    /* --------------------------------
-       Navigation
-    -------------------------------- */
-
     .footer-nav {
         display: flex;
         flex-direction: column;
@@ -329,7 +294,6 @@
     .footer-nav a {
         display: grid;
         grid-template-columns: 30px 1fr;
-
         align-items: baseline;
 
         padding: 0.65rem 0;
@@ -357,11 +321,6 @@
         font-size: 0.55rem;
     }
 
-
-    /* --------------------------------
-       Socials
-    -------------------------------- */
-
     .footer-socials {
         display: flex;
         flex-direction: column;
@@ -376,8 +335,7 @@
 
         padding: 0.75rem 0;
 
-        border-bottom:
-                1px solid rgba(247, 244, 237, 0.12);
+        border-bottom: 1px solid rgba(247, 244, 237, 0.12);
 
         color: var(--color-sage-100);
 
@@ -398,22 +356,16 @@
         font-size: 0.8rem;
     }
 
-
-    /* --------------------------------
-       Bottom
-    -------------------------------- */
-
     .footer-bottom {
         display: grid;
         grid-template-columns: 1fr auto 1fr;
-
         align-items: center;
+
         gap: 2rem;
 
         padding-top: 2rem;
 
-        border-top:
-                1px solid rgba(247, 244, 237, 0.15);
+        border-top: 1px solid rgba(247, 244, 237, 0.15);
 
         color: var(--color-sage-300);
 
@@ -427,6 +379,7 @@
 
     .legal {
         display: flex;
+
         gap: 2rem;
     }
 
@@ -434,8 +387,7 @@
     .back-top {
         color: inherit;
 
-        transition:
-                color var(--transition-fast);
+        transition: color var(--transition-fast);
     }
 
     .legal a:hover,
@@ -446,13 +398,9 @@
     .back-top {
         display: flex;
         justify-content: flex-end;
+
         gap: 0.7rem;
     }
-
-
-    /* --------------------------------
-       Giant background signature
-    -------------------------------- */
 
     .footer-signature {
         position: absolute;
@@ -472,11 +420,6 @@
         pointer-events: none;
         user-select: none;
     }
-
-
-    /* --------------------------------
-       Mobile
-    -------------------------------- */
 
     @media (max-width: 800px) {
         .footer-main {
@@ -509,6 +452,7 @@
 
         .footer-grid {
             grid-template-columns: 1fr;
+
             gap: 4rem;
 
             padding-bottom: 5rem;
@@ -525,8 +469,7 @@
         .footer-nav a {
             padding: 0.9rem 0;
 
-            border-bottom:
-                    1px solid rgba(247, 244, 237, 0.1);
+            border-bottom: 1px solid rgba(247, 244, 237, 0.1);
 
             font-size: 1.25rem;
         }

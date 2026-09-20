@@ -1,5 +1,4 @@
 <script lang="ts">
-
     const navItems = [
         { label: 'Klavier-Unterricht', href: '/teaching' },
         { label: 'Konzerte', href: '/concerts' },
@@ -19,11 +18,22 @@
     function closeMenu() {
         menuOpen = false;
     }
+
+    function handleKeydown(event: KeyboardEvent) {
+        if (event.key === 'Escape' && menuOpen) {
+            closeMenu();
+        }
+    }
 </script>
+
+<svelte:window onkeydown={handleKeydown} />
 
 <header class="navbar">
     <div class="navbar-inner">
-        <nav class="nav-side nav-left" aria-label="Hauptnavigation links">
+        <nav
+                class="nav-side nav-left"
+                aria-label="Hauptnavigation links"
+        >
             {#each navLeft as item}
                 <a href={item.href}>
                     {item.label}
@@ -40,7 +50,10 @@
             <span>NS</span>
         </a>
 
-        <nav class="nav-side nav-right" aria-label="Hauptnavigation rechts">
+        <nav
+                class="nav-side nav-right"
+                aria-label="Hauptnavigation rechts"
+        >
             {#each navRight as item}
                 <a href={item.href}>
                     {item.label}
@@ -83,14 +96,17 @@
             Nanami Shiraki
         </p>
 
-        <nav class="mobile-links" aria-label="Mobile Navigation">
+        <nav
+                class="mobile-links"
+                aria-label="Mobile Navigation"
+        >
             {#each navItems as item, index}
                 <a
                         href={item.href}
                         onclick={closeMenu}
                 >
 					<span class="number">
-						0{index + 1}
+						{String(index + 1).padStart(2, '0')}
 					</span>
 
                     <span>{item.label}</span>
@@ -100,7 +116,10 @@
 
         <div class="mobile-decoration">
             <span></span>
-            <p>Pianistin & Klavierpädagogin</p>
+
+            <p>
+                Pianistin & Klavierpädagogin
+            </p>
         </div>
     </div>
 </aside>
@@ -116,6 +135,7 @@
         height: var(--navbar-height);
 
         background: var(--color-cream);
+
         border-bottom: 1px solid var(--border-soft);
     }
 
@@ -139,6 +159,7 @@
     .nav-side {
         display: flex;
         align-items: center;
+
         gap: clamp(2rem, 4vw, 4rem);
     }
 
@@ -196,12 +217,11 @@
 
         margin-top: 28px;
 
+        border: 1px solid rgba(74, 90, 79, 0.12);
         border-radius: 50%;
 
         background: var(--color-sage-100);
         color: var(--color-sage-700);
-
-        border: 1px solid rgba(74, 90, 79, 0.12);
 
         box-shadow: var(--shadow-soft);
 
@@ -222,23 +242,13 @@
         letter-spacing: 0.06em;
     }
 
-    .burger {
-        display: none;
-    }
-
+    .burger,
     .mobile-menu,
     .menu-backdrop {
         display: none;
     }
 
-    /* MOBILE */
-
     @media (max-width: 800px) {
-        /* --------------------------------
-           Navbar shell
-           No visible navbar on mobile
-        -------------------------------- */
-
         .navbar {
             width: 0;
             height: 0;
@@ -252,6 +262,7 @@
         .navbar-inner {
             width: 0;
             height: 0;
+
             margin: 0;
         }
 
@@ -259,11 +270,6 @@
         .home {
             display: none;
         }
-
-
-        /* --------------------------------
-           Floating burger button
-        -------------------------------- */
 
         .burger {
             position: fixed;
@@ -275,6 +281,7 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
+
             gap: 7px;
 
             width: 48px;
@@ -283,6 +290,7 @@
             border-radius: 50%;
 
             background: var(--color-cream);
+
             box-shadow: var(--shadow-soft);
 
             pointer-events: auto;
@@ -313,8 +321,6 @@
             width: 17px;
         }
 
-        /* Burger → X */
-
         .burger.open span:first-child {
             width: 25px;
 
@@ -330,11 +336,6 @@
                     translateY(-4px)
                     rotate(-45deg);
         }
-
-
-        /* --------------------------------
-           Background overlay
-        -------------------------------- */
 
         .menu-backdrop {
             position: fixed;
@@ -354,19 +355,13 @@
             backdrop-filter: blur(2px);
             -webkit-backdrop-filter: blur(2px);
 
-            transition:
-                    opacity var(--transition-normal);
+            transition: opacity var(--transition-normal);
         }
 
         .menu-backdrop.open {
             opacity: 1;
             pointer-events: auto;
         }
-
-
-        /* --------------------------------
-           Slide-in menu
-        -------------------------------- */
 
         .mobile-menu {
             position: fixed;
@@ -396,11 +391,6 @@
             transform: translateX(0);
         }
 
-
-        /* --------------------------------
-           Menu content
-        -------------------------------- */
-
         .mobile-menu-content {
             display: flex;
             flex-direction: column;
@@ -423,11 +413,6 @@
             text-transform: uppercase;
         }
 
-
-        /* --------------------------------
-           Navigation links
-        -------------------------------- */
-
         .mobile-links {
             display: flex;
             flex-direction: column;
@@ -440,15 +425,10 @@
 
             padding: 1.35rem 0;
 
-            border-bottom:
-                    1px solid var(--border-soft);
+            border-bottom: 1px solid var(--border-soft);
 
             font-family: var(--font-serif);
-            font-size: clamp(
-                    1.55rem,
-                    7vw,
-                    2.2rem
-            );
+            font-size: clamp(1.55rem, 7vw, 2.2rem);
         }
 
         .number {
@@ -458,11 +438,6 @@
             font-size: 0.6rem;
             letter-spacing: 0.08em;
         }
-
-
-        /* --------------------------------
-           Bottom decoration
-        -------------------------------- */
 
         .mobile-decoration {
             margin-top: auto;
