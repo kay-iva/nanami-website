@@ -11,6 +11,7 @@
         description: string;
         image?: SiteImage | null;
         fallback?: string;
+        accent?: 'sage' | 'peach';
         actions?: Snippet;
     }
 
@@ -21,6 +22,7 @@
         description,
         image,
         fallback = '/fallbacks/portrait.webp',
+        accent = 'sage',
         actions
     }: Props = $props();
 </script>
@@ -57,7 +59,7 @@
                         {fallback}
                 />
 
-                <div class="accent" aria-hidden="true"></div>
+                <div class="accent" class:peach={accent === 'peach'} aria-hidden="true"></div>
             </div>
         {/if}
     </div>
@@ -106,7 +108,6 @@
 
     .lead {
         max-width: 650px;
-
         margin-bottom: 0;
 
         color: var(--color-text-soft);
@@ -121,6 +122,9 @@
 
     .media {
         position: relative;
+
+        width: min(100%, 520px);
+        margin-inline: auto;
     }
 
     .media :global(img) {
@@ -128,9 +132,7 @@
         z-index: 2;
 
         width: 100%;
-        aspect-ratio: 4 / 5;
-
-        object-fit: cover;
+        height: auto;
     }
 
     .accent {
@@ -143,6 +145,10 @@
         height: 60%;
 
         background: var(--color-sage-100);
+    }
+
+    .accent.peach {
+        background: var(--color-peach);
     }
 
     @media (max-width: 800px) {
